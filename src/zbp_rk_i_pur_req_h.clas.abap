@@ -1,0 +1,5 @@
+CLASS zbp_rk_i_pur_req_h DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zrk_i_pur_req_h.
+ENDCLASS.
+
+CLASS zbp_rk_i_pur_req_h IMPLEMENTATION.
+ENDCLASS.
