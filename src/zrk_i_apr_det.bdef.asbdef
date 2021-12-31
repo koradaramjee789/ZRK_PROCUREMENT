@@ -1,0 +1,46 @@
+managed implementation in class zrk_bp_apr_det unique;
+strict;
+with draft;
+
+define behavior for ZRK_I_APR_DET alias Approval
+persistent table zrk_apr_det
+draft table zrk_dt_apr_det
+etag master LoclLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+
+{
+  field ( readonly )
+   CreatedAt,
+   CreatedBy,
+   LastChangedAt,
+   LoclLastChangedAt,
+   LastChangedBy;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZRK_APR_DET
+  {
+    ObjectType = OBJECT_TYPE;
+    ObjectID = OBJECT_ID;
+    Description = DESCRIPTION;
+    ToalAmount = TOAL_AMOUNT;
+    CurrencyKey = CURRENCY_KEY;
+    Status = STATUS;
+    Comments = COMMENTS;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LoclLastChangedAt = LOCL_LAST_CHANGED_AT;
+  }
+}

@@ -21,7 +21,10 @@ annotate entity ZRK_I_PUR_REQ_I with
 
   @UI.hidden: true
   ObjectId;
-  @UI.lineItem: [{position: 10 } , { type: #FOR_ACTION, dataAction: 'assignSupplier', label: 'Assign Supplier' }]
+  @UI.lineItem: [{position: 10 } , 
+    { type: #FOR_ACTION, dataAction: 'assignSupplier', label: 'Assign Supplier' } 
+    ]
+  
   @UI.identification: [{position: 10 }]
   ItemNo;
   @UI.lineItem: [{position: 20 }]
