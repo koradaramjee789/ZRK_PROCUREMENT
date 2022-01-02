@@ -17,13 +17,13 @@ CLASS zrk_cl_gen_md_data IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
 
-*  DATA lt_send_via TYPE TABLE of zrk_md_send_via.
-*
-*  lt_send_via = VALUE #( ( client = sy-mandt send_via = 'PRN' sent_via_text = 'Print' )
-*                           ( client = sy-mandt send_via = 'MAI' sent_via_text = 'Email' )
-*                           ( client = sy-mandt send_via = 'EDI' sent_via_text = 'Application' ) ).
-*
-*  MODIFY zrk_md_send_via FROM TABLE @lt_send_via.
+  DATA lt_send_via TYPE TABLE of zrk_md_send_via.
+
+  lt_send_via = VALUE #( ( client = sy-mandt send_via = 'PRN' sent_via_text = 'Print' )
+                           ( client = sy-mandt send_via = 'MAI' sent_via_text = 'Email' )
+                           ( client = sy-mandt send_via = 'EDI' sent_via_text = 'Application' ) ).
+
+  MODIFY zrk_md_send_via FROM TABLE @lt_send_via.
 
 
     DATA lt_sup TYPE TABLE OF zrk_md_supplier.
@@ -111,57 +111,57 @@ CLASS zrk_cl_gen_md_data IMPLEMENTATION.
 
     MODIFY zrk_md_parts FROM TABLE @(  VALUE #( ( client = sy-mandt part_no = 'PT256545' category_id = 'CC-005-21' description = '10" Portable DVD player ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT267655' category_id = 'CC-005-28' description = '7" Widescreen Portable DVD Player w MP3 ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT278765' category_id = 'CC-005-42' description = 'Audio/Video Cable Kit - 4m ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT278765' category_id = 'CC-005-42' description = 'Audio/Video Cable Kit - 4m ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT289875' category_id = 'CC-005-56' description = 'Beam Breaker B-1 ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT300985' category_id = 'CC-010-70' description = 'Blaster Extreme ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT312095' category_id = 'CC-010-72' description = 'CD/DVD case: 264 sleeves ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT323205' category_id = 'CC-010-75' description = 'Camcorder View ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT334315' category_id = 'CC-010-76' description = 'Comfort Easy ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT334315' category_id = 'CC-010-76' description = 'Comfort Easy ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT345425' category_id = 'CC-010-78' description = 'Comfort Senior ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT356535' category_id = 'CC-010-81' description = 'Copperberry ' unit = 'M' )
-                                                  ( client = sy-mandt part_no = 'PT367645' category_id = 'CC-020-02' description = 'Copymaster ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT367645' category_id = 'CC-020-02' description = 'Copymaster ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT378755' category_id = 'CC-020-04' description = 'Cordless Bluetooth Keyboard, english international ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT156555' category_id = 'CC-020-06' description = 'Cordless Mouse ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT167665' category_id = 'CC-020-08' description = 'Designer Mousepad ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT178775' category_id = 'CC-005-21' description = 'Ergo Mousepad ' unit = 'KG' )
                                                   ( client = sy-mandt part_no = 'PT189885' category_id = 'CC-005-28' description = 'Ergo Screen E-I ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT200995' category_id = 'CC-005-42' description = 'Ergonomic Keyboard ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT212105' category_id = 'CC-005-56' description = 'Fabric bag professional ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT212105' category_id = 'CC-005-56' description = 'Fabric bag professional ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT223215' category_id = 'CC-010-70' description = 'Family PC Basic ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT234325' category_id = 'CC-005-21' description = 'Family PC Pro ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT245435' category_id = 'CC-005-28' description = 'Flat Basic ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT256545' category_id = 'CC-005-42' description = 'Flat Future ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT267655' category_id = 'CC-005-56' description = 'Flat Watch HD32 ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT267655' category_id = 'CC-005-56' description = 'Flat Watch HD32 ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT278765' category_id = 'CC-010-70' description = 'Flat Watch HD37 ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT289875' category_id = 'CC-010-72' description = 'Flat Watch HD41 ' unit = 'M' )
-                                                  ( client = sy-mandt part_no = 'PT300985' category_id = 'CC-010-75' description = 'Flat XL ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT300985' category_id = 'CC-010-75' description = 'Flat XL ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT312095' category_id = 'CC-010-76' description = 'Flat XXL ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT323205' category_id = 'CC-010-70' description = 'Gaming Monster ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT334315' category_id = 'CC-010-72' description = 'Gaming Monster Pro ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT345425' category_id = 'CC-005-42' description = 'Gladiator MX ' unit = 'KG' )
                                                   ( client = sy-mandt part_no = 'PT356535' category_id = 'CC-005-56' description = 'Goldberry ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT367645' category_id = 'CC-010-70' description = 'Hurricane GX ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT378755' category_id = 'CC-005-35' description = 'Hurricane GX/LN ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT378755' category_id = 'CC-005-35' description = 'Hurricane GX/LN ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT389865' category_id = 'CC-005-42' description = 'ITelO FlexTop I4000 ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT400975' category_id = 'CC-010-74' description = 'ITelO FlexTop I9800 ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT412085' category_id = 'CC-010-76' description = 'ITelO Vault ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT423195' category_id = 'CC-005-70' description = 'ITelO Vault Net ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT434305' category_id = 'CC-005-84' description = 'ITelO Vault SAT ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT434305' category_id = 'CC-005-84' description = 'ITelO Vault SAT ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT445415' category_id = 'CC-010-71' description = 'ITelo Jog-Mate ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT456525' category_id = 'CC-010-70' description = 'ITelo MusicStick ' unit = 'M' )
-                                                  ( client = sy-mandt part_no = 'PT467635' category_id = 'CC-010-72' description = 'Internet Keyboard ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT467635' category_id = 'CC-010-72' description = 'Internet Keyboard ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT478745' category_id = 'CC-005-42' description = 'Jet Scan Professional ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT489855' category_id = 'CC-005-56' description = 'Jet Scan Professional ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT500965' category_id = 'CC-010-70' description = 'Laser Allround ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT512075' category_id = 'CC-005-35' description = 'Laser Basic ' unit = 'KG' )
                                                   ( client = sy-mandt part_no = 'PT523185' category_id = 'CC-005-42' description = 'Laser Professional Eco ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT534295' category_id = 'CC-010-74' description = 'Lovely Sound 5.1 ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT545405' category_id = 'CC-010-76' description = 'Lovely Sound 5.1 Wireless ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT545405' category_id = 'CC-010-76' description = 'Lovely Sound 5.1 Wireless ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT556515' category_id = 'CC-005-70' description = 'Lovely Sound Stereo ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT567625' category_id = 'CC-005-84' description = 'Maxi Tablet ' unit = 'M' )
                                                   ( client = sy-mandt part_no = 'PT578735' category_id = 'CC-010-71' description = 'Media Keyboard ' unit = 'EA' )
                                                   ( client = sy-mandt part_no = 'PT589845' category_id = 'CC-005-140' description = 'Mini Tablet ' unit = 'KG' )
-                                                  ( client = sy-mandt part_no = 'PT600955' category_id = 'CC-010-73' description = 'Mousepad ' unit = 'TN' )
+                                                  ( client = sy-mandt part_no = 'PT600955' category_id = 'CC-010-73' description = 'Mousepad ' unit = 'TON' )
                                                   ( client = sy-mandt part_no = 'PT612065' category_id = 'CC-005-77' description = 'Multi Color ' unit = 'L' )
                                                   ( client = sy-mandt part_no = 'PT623175' category_id = 'CC-005-84' description = 'Multi Print ' unit = 'M' )
                                                      ) )      .

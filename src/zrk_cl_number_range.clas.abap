@@ -21,8 +21,8 @@ CLASS zrk_cl_number_range IMPLEMENTATION.
 
          nr_interval = VALUE #( ( subobject = ''
                                   nrrangenr = '01'
-                                  fromnumber  = '1000000'
-                                  tonumber    = '9999999'
+                                  fromnumber  = '10000000'
+                                  tonumber    = '99999999'
                                   procind     = 'I' )  ).
 
   cl_numberrange_intervals=>create(
