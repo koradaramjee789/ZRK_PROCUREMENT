@@ -1,0 +1,50 @@
+managed implementation in class ZRK_BP_PUR_CON_H unique;
+strict;
+with draft;
+
+define behavior for ZRK_I_PUR_CON_H alias PCHead
+persistent table zrk_t_pur_con_h
+draft table ZRK_DT_PUR_CON_H
+etag master LoclLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+
+{
+  field ( readonly )
+   OrdUUID,
+   CreatedAt,
+   CreatedBy,
+   LastChangedAt,
+   LoclLastChangedAt,
+   LastChangedBy;
+
+  field ( numbering : managed )
+   OrdUUID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZRK_T_PUR_CON_H
+  {
+    OrdUUID = ORD_UUID;
+    ObjectID = OBJECT_ID;
+    Description = DESCRIPTION;
+    Buyer = BUYER;
+    Supplier = SUPPLIER;
+    SupConID = SUP_CON_ID;
+    StatCode = STAT_CODE;
+    CreatedBy = CREATED_BY;
+    CreatedAt = CREATED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LoclLastChangedAt = LOCL_LAST_CHANGED_AT;
+  }
+}
