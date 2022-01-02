@@ -1,5 +1,6 @@
 @AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: '##GENERATED ZRK_GEN_PUR_CON_H'
+@Metadata.allowExtensions: true
 define root view entity ZRK_I_PUR_CON_H
   as select from zrk_t_pur_con_h as PCHead
 {

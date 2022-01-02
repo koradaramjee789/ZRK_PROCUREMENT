@@ -1,0 +1,8 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_I_PUR_CON_H
+    with 
+{
+@UI.hidden: true
+    CreatedAt;
+    
+}
