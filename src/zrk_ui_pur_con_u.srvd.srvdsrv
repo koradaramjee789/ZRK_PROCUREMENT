@@ -1,0 +1,4 @@
+@EndUserText.label: 'pur contract UI'
+define service Zrk_ui_pur_con_u {
+  expose ZRK_C_PUR_CON as PurCon;
+}
