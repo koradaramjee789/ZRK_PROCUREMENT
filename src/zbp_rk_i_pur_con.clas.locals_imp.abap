@@ -149,14 +149,15 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
     <fs_new_con>-Description = 'Defaulted from backend'.
 
-*    <fs_new_con>-ValidFrom = cl_abap_context_info=>get_system_date( ).
-*
-*    <fs_new_con>-ValidTo = <fs_new_con>-ValidFrom + 364.
+    <fs_new_con>-ValidFrom = cl_abap_context_info=>get_system_date( ).
+
+    <fs_new_con>-ValidTo = <fs_new_con>-ValidFrom + 364.
 
     <fs_new_con>-Buyer = sy-uname.
 
     <fs_new_con>-CreatedBy = sy-uname.
-    "
+
+    " Wrapper logic to default company code based on logged in user
     <fs_new_con>-CompCode =
         zrk_cl_mng_pur_con=>get_defaults_for_create(  )-comp_code.
 
