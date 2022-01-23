@@ -1,0 +1,22 @@
+unmanaged implementation in class zbp_rk_i_pur_con_ud unique;
+with draft;
+
+define behavior for ZRK_I_PUR_CON_UD alias PurCon
+//late numbering
+draft table zrk_dt_pur_con_u
+lock master total etag LoclLastChangedAt
+authorization master ( instance )
+etag master LoclLastChangedAt
+{
+
+field ( numbering : managed) ConUuid;
+  create;
+  update;
+  delete;
+
+  determination set_pc_num on modify { create; }
+
+
+
+
+}
