@@ -42,6 +42,18 @@ annotate entity ZRK_C_PUR_CON_UD
    ]
 
   @UI.hidden: true
+  @UI.lineItem: [{
+      position: 10 ,
+      type: #FOR_ACTION,
+      label: 'Forward',
+      dataAction: 'Forward'
+  }]
+    @UI.identification: [{
+      position: 10 ,
+      type: #FOR_ACTION,
+      label: 'Forward',
+      dataAction: 'Forward'
+  }]
   ConUuid;
 
   @UI:{ lineItem: [{ position: 10 }] , identification: [{ position: 10 , qualifier: 'Header'}]}

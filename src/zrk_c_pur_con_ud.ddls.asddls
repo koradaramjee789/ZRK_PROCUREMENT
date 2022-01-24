@@ -1,7 +1,9 @@
 @AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'Project for unmanaged draft'
 @Metadata.allowExtensions: true
-define root view entity ZRK_C_PUR_CON_UD as projection on ZRK_I_PUR_CON_UD
+define root view entity ZRK_C_PUR_CON_UD 
+provider contract transactional_query
+as projection on ZRK_I_PUR_CON_UD
 {
     key ConUuid,
     ObjectId,
