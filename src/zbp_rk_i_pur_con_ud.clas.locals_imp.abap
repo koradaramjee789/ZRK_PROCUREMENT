@@ -57,6 +57,7 @@ CLASS lhc_PurCon IMPLEMENTATION.
       ls_pur_con-stat_code = <fs_entity>-StatCode .
       ls_pur_con-valid_from = <fs_entity>-Validfrom .
       ls_pur_con-valid_to = <fs_entity>-ValidTo .
+      ls_pur_con-fiscl_year = <fs_entity>-FisclYear .
       ls_pur_con-created_at = <fs_entity>-CreatedAt .
       ls_pur_con-created_by = <fs_entity>-CreatedBy .
 
@@ -83,7 +84,9 @@ CLASS lhc_PurCon IMPLEMENTATION.
       ls_pur_con-description = COND #( WHEN <fs_entity>-%control-Description EQ '01'
                                         THEN <fs_entity>-Description
                                         ELSE ls_pur_con-description ) .
-      ls_pur_con-buyer = <fs_entity>-Buyer .
+      ls_pur_con-buyer = COND #( WHEN <fs_entity>-%control-Buyer EQ '01'
+                                        THEN <fs_entity>-Buyer
+                                        ELSE ls_pur_con-buyer ) .
       ls_pur_con-supplier = <fs_entity>-Supplier .
       ls_pur_con-sup_con_id = <fs_entity>-SupConId .
       ls_pur_con-comp_code = COND #( WHEN <fs_entity>-%control-CompCode EQ '01'
@@ -96,6 +99,9 @@ CLASS lhc_PurCon IMPLEMENTATION.
       ls_pur_con-valid_to = COND #( WHEN <fs_entity>-%control-ValidTo EQ '01'
                                       THEN <fs_entity>-ValidTo
                                       ELSE ls_pur_con-valid_To ).
+      ls_pur_con-fiscl_year = COND #( WHEN <fs_entity>-%control-fisclyear EQ '01'
+                                      THEN <fs_entity>-fisclyear
+                                      ELSE ls_pur_con-fiscl_year ).
       ls_pur_con-created_at = <fs_entity>-CreatedAt .
       ls_pur_con-created_by = COND #( WHEN <fs_entity>-%control-CreatedBy EQ '01'
                                       THEN <fs_entity>-CreatedBy
@@ -126,7 +132,23 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
       APPEND INITIAL LINE TO result ASSIGNING FIELD-SYMBOL(<fs_result>).
       <fs_result>-%tky = <fs_key>-%tky.
-      <fs_result> = CORRESPONDING #( ls_pur_con ).
+      <fs_result>-ConUuid = ls_pur_con-con_uuid.
+      <fs_result>-ObjectId = ls_pur_con-object_id.
+      <fs_result>-Description = ls_pur_con-description.
+      <fs_result>-Buyer = ls_pur_con-buyer.
+      <fs_result>-Supplier = ls_pur_con-supplier.
+      <fs_result>-SupConId = ls_pur_con-sup_con_id.
+      <fs_result>-CompCode = ls_pur_con-comp_code.
+      <fs_result>-ValidFrom = ls_pur_con-valid_from.
+      <fs_result>-ValidTo = ls_pur_con-valid_to.
+      <fs_result>-FisclYear = ls_pur_con-fiscl_year.
+      <fs_result>-CreatedBy = ls_pur_con-created_by.
+      <fs_result>-CreatedAt = ls_pur_con-created_at.
+      <fs_result>-LastChangedBy = ls_pur_con-last_changed_by.
+      <fs_result>-LastChangedAt = ls_pur_con-last_changed_at.
+      <fs_result>-LoclLastChangedAt = ls_pur_con-locl_last_changed_at.
+
+
     ENDLOOP.
 
   ENDMETHOD.
@@ -148,13 +170,15 @@ CLASS lhc_PurCon IMPLEMENTATION.
     MODIFY ENTITIES OF zrk_i_pur_con_ud
     IN LOCAL MODE
     ENTITY PurCon
-    UPDATE FIELDS ( ObjectId ValidFrom ValidTo FisclYear Buyer )
+    UPDATE FIELDS ( ObjectId Description ValidFrom ValidTo FisclYear Buyer )
     WITH VALUE #( FOR <fs_con> IN lt_con ( %tky = <fs_con>-%tky
                                              ObjectId = <fs_con>-ObjectId
+                                             Description = 'New PC'
                                              ValidFrom = cl_abap_context_info=>get_system_date( )
                                              ValidTo = cl_abap_context_info=>get_system_date(  ) + 364
                                              Buyer = sy-uname
-                                             FisclYear = '2022' ) ).
+                                             FisclYear = '2022'
+                                             CreatedBy = sy-uname ) ).
 
   ENDMETHOD.
 
@@ -172,23 +196,43 @@ CLASS lhc_PurCon IMPLEMENTATION.
     WITH CORRESPONDING #( keys )
     RESULT DATA(lt_buyer).
 
-    MODIFY TABLE lt_buyer FROM VALUE #( Buyer = lv_new_buyer ).
+    MODIFY ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
+    ENTITY PurCon
+    EXECUTE edit FROM
+  "  UPDATE FIELDS ( Buyer ) WITH
+    VALUE #( FOR <fs_rec> IN lt_buyer ( %key = <fs_key>-%key
+*                                             %is_draft = <fs_key>-%is_draft
+*                                             Buyer = lv_new_buyer ) )
+               %param-preserve_changes = 'X'
+                ) )
+              REPORTED DATA(edit_reported)
+              FAILED DATA(edit_failed)
+              MAPPED DATA(edit_mapped).                                             .
+
 
     MODIFY ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
     ENTITY PurCon
     UPDATE FIELDS ( Buyer )
-    WITH VALUE #( FOR <fs_rec> IN lt_buyer ( %tky = <fs_rec>-%tky
-                                             %is_draft = '01'
-                                             Buyer = <fs_rec>-Buyer ) ).
+    WITH VALUE #( FOR <fs_rec_draft> IN edit_mapped-purcon ( %tky = <fs_key>-%tky
+                                             %is_draft = '01' "<fs_key>-%is_draft
+                                             Buyer = lv_new_buyer ) )
+                                   REPORTED edit_reported
+                                   FAILED edit_failed
+                                   MAPPED DATA(lt_updated).
 
+
+    DATA(lt_temp_keys) = keys.
+    lt_temp_keys[ 1 ]-%is_draft = '01'.
     READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
     ENTITY PurCon
     ALL FIELDS
-    WITH CORRESPONDING #( keys )
+    WITH CORRESPONDING #( lt_temp_keys )
     RESULT DATA(lt_buyer_updated).
 
-    result = VALUE #( FOR <fs_rec> IN lt_buyer ( %tky = <fs_rec>-%tky
-                                             %param = <fs_rec> ) ).
+    result = CORRESPONDING #( lt_buyer_updated ).
+
+*    result = VALUE #( FOR <fs_rec> IN lt_buyer_updated ( %tky = lt_temp_keys[ 1 ]-%tky
+*                                             %param = <fs_rec> ) ).
 
 
   ENDMETHOD.

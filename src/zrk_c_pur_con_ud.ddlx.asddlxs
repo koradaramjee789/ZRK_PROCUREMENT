@@ -56,12 +56,15 @@ annotate entity ZRK_C_PUR_CON_UD
   }]
   ConUuid;
 
-  @UI:{ lineItem: [{ position: 10 }] , identification: [{ position: 10 , qualifier: 'Header'}]}
+  @UI:{ lineItem: [{ position: 10 }] , identification: [{ position: 10 , qualifier: 'General'}]}
+  @UI.selectionField: [{ position: 10 }]
   ObjectId;
   
-  @UI:{ lineItem: [{ position: 20 }] , identification: [{ position: 20 , qualifier: 'Header'}]}
+  @UI.selectionField: [{ position: 20 }]
+  @UI:{ lineItem: [{ position: 20 }] , identification: [{ position: 20 , qualifier: 'General'}]}
   Description;
   
+  @UI.selectionField: [{ position: 30 }]
   @UI:{ lineItem: [{ position: 30 }] , identification: [{ position: 30 , qualifier: 'General'}]}
   @Consumption.valueHelpDefinition: [{ 
       entity: {
@@ -71,6 +74,7 @@ annotate entity ZRK_C_PUR_CON_UD
    }]  
   Buyer;
   
+  @UI.selectionField: [{ position: 40 }]
   @UI:{ lineItem: [{ position: 40 }] , identification: [{ position: 40 ,qualifier: 'General'}]}
   @Consumption.valueHelpDefinition: [{ entity: {
       name: 'ZRK_I_SUPPLIER',
@@ -95,6 +99,7 @@ annotate entity ZRK_C_PUR_CON_UD
   }]   
   SupConId;
   
+  @UI.selectionField: [{ position: 50 }]
   @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 55 ,qualifier: 'General'}]}
   @Consumption.valueHelpDefinition: [{ entity: {
       name: 'ZRK_I_COMP_CODE',

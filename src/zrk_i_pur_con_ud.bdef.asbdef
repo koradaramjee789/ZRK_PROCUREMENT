@@ -9,18 +9,23 @@ authorization master ( instance )
 etag master LoclLastChangedAt
 {
 
-field ( numbering : managed) ConUuid;
+  field ( numbering : managed ) ConUuid;
+  field ( readonly ) ObjectId , CreatedBy;
   create;
   update;
   delete;
 
+  //draft action Edit;
+
   determination set_pc_num on modify { create; }
 
-  action Forward parameter ZRK_I_FWD_BUYER result [1] $self;
+  action Forward parameter ZRK_I_FWD_BUYER result [1] ZRK_I_PUR_CON_UD ;
 
- mapping for zrk_i_fwd_buyer control zrk_s_fwd_buyer_intx
- {
- Buyer = Buyer;
- }
+
+  mapping for zrk_i_fwd_buyer control zrk_s_fwd_buyer_intx
+  {
+    Buyer = Buyer;
+  }
+
 
 }
