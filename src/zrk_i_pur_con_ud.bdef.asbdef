@@ -19,6 +19,7 @@ etag master LoclLastChangedAt
 
   determination set_pc_num on modify { create; }
 
+  //static
   action Forward parameter ZRK_I_FWD_BUYER result [1] ZRK_I_PUR_CON_UD ;
 
 

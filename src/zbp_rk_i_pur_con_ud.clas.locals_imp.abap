@@ -31,6 +31,10 @@ ENDCLASS.
 CLASS lhc_PurCon IMPLEMENTATION.
 
   METHOD get_instance_features.
+
+  if 1 = 2 .
+
+  ENDIF.
   ENDMETHOD.
 
   METHOD get_instance_authorizations.
@@ -184,56 +188,58 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
   METHOD Forward.
 
-
+*/.. Get new buyer information
     READ TABLE keys ASSIGNING FIELD-SYMBOL(<fs_key>) INDEX 1.
     IF sy-subrc EQ 0.
       DATA(lv_new_buyer) = <fs_key>-%param-Buyer.
     ENDIF.
 
-    READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
-    ENTITY PurCon
-    FIELDS ( Buyer )
-    WITH CORRESPONDING #( keys )
-    RESULT DATA(lt_buyer).
+*/..Create a draft instance for all active instance
+*/.. There could be multiple records mixed with draft/active when multi-select is enabled.
 
     MODIFY ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
     ENTITY PurCon
     EXECUTE edit FROM
-  "  UPDATE FIELDS ( Buyer ) WITH
-    VALUE #( FOR <fs_rec> IN lt_buyer ( %key = <fs_key>-%key
-*                                             %is_draft = <fs_key>-%is_draft
-*                                             Buyer = lv_new_buyer ) )
-               %param-preserve_changes = 'X'
-                ) )
-              REPORTED DATA(edit_reported)
-              FAILED DATA(edit_failed)
-              MAPPED DATA(edit_mapped).                                             .
+    VALUE #( FOR <fs_active_key> IN keys WHERE ( %is_draft = if_abap_behv=>mk-off )
+                                            ( %key = <fs_active_key>-%key
+                                              %param-preserve_changes = 'X'
+                                            ) )
+          REPORTED DATA(edit_reported)
+          FAILED DATA(edit_failed)
+          MAPPED DATA(edit_mapped).
 
+    DATA(lt_temp_keys) = keys.
+    LOOP AT lt_temp_keys ASSIGNING FIELD-SYMBOL(<fs_temp_keys>).
+        <fs_temp_keys>-%is_draft = if_abap_behv=>mk-on.
+    ENDLOOP.
 
+*/.. Read the existing Data
+    READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
+    ENTITY PurCon
+    FIELDS ( Buyer )
+    WITH CORRESPONDING #( lt_temp_keys )
+    RESULT DATA(lt_buyer).
+
+*/.. Then modify the draft instance but not active instance
     MODIFY ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
     ENTITY PurCon
     UPDATE FIELDS ( Buyer )
-    WITH VALUE #( FOR <fs_rec_draft> IN edit_mapped-purcon ( %tky = <fs_key>-%tky
-                                             %is_draft = '01' "<fs_key>-%is_draft
+    WITH VALUE #( FOR <fs_rec_draft> IN lt_buyer ( %tky = <fs_rec_draft>-%tky
+                                             %is_draft = '01'
                                              Buyer = lv_new_buyer ) )
                                    REPORTED edit_reported
                                    FAILED edit_failed
                                    MAPPED DATA(lt_updated).
 
-
-    DATA(lt_temp_keys) = keys.
-    lt_temp_keys[ 1 ]-%is_draft = '01'.
+*/.. Read the data to send back to UI. / Optional - This is to check if the values are updated ?
     READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
     ENTITY PurCon
     ALL FIELDS
     WITH CORRESPONDING #( lt_temp_keys )
     RESULT DATA(lt_buyer_updated).
 
+*/.. Pass the data to UI.
     result = CORRESPONDING #( lt_buyer_updated ).
-
-*    result = VALUE #( FOR <fs_rec> IN lt_buyer_updated ( %tky = lt_temp_keys[ 1 ]-%tky
-*                                             %param = <fs_rec> ) ).
-
 
   ENDMETHOD.
 
