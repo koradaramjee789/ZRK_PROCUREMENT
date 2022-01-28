@@ -36,13 +36,13 @@ CLASS lhc__pritem IMPLEMENTATION.
         UPDATE FIELDS ( Supplier )
         WITH CORRESPONDING #( lt_item ).
 
-   READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
-        ENTITY _PRItem
-        ALL FIELDS WITH CORRESPONDING #( keys )
-        RESULT DATA(lt_items_updated).
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+         ENTITY _PRItem
+         ALL FIELDS WITH CORRESPONDING #( keys )
+         RESULT DATA(lt_items_updated).
 
 
-    RESUlT = VALUE #( for <fs_res> In lt_items_updated ( %tky = <fs_res>-%tky %param = <fs_res> ) ) .
+    RESUlT = VALUE #( FOR <fs_res> IN lt_items_updated ( %tky = <fs_res>-%tky %param = <fs_res> ) ) .
 
 
   ENDMETHOD.
@@ -61,6 +61,8 @@ CLASS lhc__PRHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_features FOR _prhead RESULT result.
     METHODS copyrequisition FOR MODIFY
       IMPORTING keys FOR ACTION _prhead~copyrequisition.
+    METHODS convert_into_pc FOR MODIFY
+      IMPORTING keys FOR ACTION _prhead~convert_into_pc .
     METHODS earlynumbering_cba_pritem FOR NUMBERING
       IMPORTING entities FOR CREATE _prhead\_pritem.
     METHODS earlynumbering_create FOR NUMBERING
@@ -242,6 +244,49 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
 
     ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD Convert_Into_PC.
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+        ENTITY _PRHead
+        ALL FIELDS WITH CORRESPONDING #( keys )
+        RESULT DATA(lt_pur_req).
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+        ENTITY _PRHead BY \_PRItem
+        ALL FIELDS WITH CORRESPONDING #( keys )
+        RESULT DATA(lt_pur_req_item).
+
+
+    DATA(lo_pur_con) = NEW zrk_cl_mng_pur_con( iv_con_uuid = cl_system_uuid=>create_uuid_x16_static(  ) ).
+
+    DATA(ls_pr) = lt_pur_req[ 1 ].
+    DATA(ls_pr_item) = lt_pur_req_item[ 1 ].
+
+    lo_pur_con->create( is_pur_con = VALUE #(
+                        client = sy-mandt
+                        con_uuid = lo_pur_con->at_con_uuid
+                        object_id ='PCPR1'
+                        description = |Created from { ls_pr-ObjectId }|
+                        buyer = ls_pr-Buyer
+                        supplier = ls_pr_item-Supplier
+                        sup_con_id =''
+                        comp_code = zrk_cl_mng_pur_con=>get_defaults_for_create(  )-comp_code
+                        stat_code =''
+                        fiscl_year ='2022'
+                        valid_from = cl_abap_context_info=>get_system_date( )
+                        valid_to = cl_abap_context_info=>get_system_date( ) + 364
+                        created_by = sy-uname
+                        created_at ='0.0000000 '
+                        last_changed_by = sy-uname
+                        last_changed_at ='0.0000000 '
+                        locl_last_changed_at ='0.0000000'
+
+     ) ).
+
+*    result = CORRESPONDING #( lt_pur_req ).
 
   ENDMETHOD.
 

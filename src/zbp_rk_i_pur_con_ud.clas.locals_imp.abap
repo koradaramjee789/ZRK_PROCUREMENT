@@ -174,13 +174,14 @@ CLASS lhc_PurCon IMPLEMENTATION.
     MODIFY ENTITIES OF zrk_i_pur_con_ud
     IN LOCAL MODE
     ENTITY PurCon
-    UPDATE FIELDS ( ObjectId Description ValidFrom ValidTo FisclYear Buyer )
+    UPDATE FIELDS ( ObjectId Description ValidFrom ValidTo FisclYear Buyer CompCode )
     WITH VALUE #( FOR <fs_con> IN lt_con ( %tky = <fs_con>-%tky
                                              ObjectId = <fs_con>-ObjectId
                                              Description = 'New PC'
                                              ValidFrom = cl_abap_context_info=>get_system_date( )
                                              ValidTo = cl_abap_context_info=>get_system_date(  ) + 364
                                              Buyer = sy-uname
+                                             CompCode = 'CC28'
                                              FisclYear = '2022'
                                              CreatedBy = sy-uname ) ).
 

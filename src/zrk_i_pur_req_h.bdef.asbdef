@@ -20,6 +20,8 @@ early numbering
 
   factory action copyRequisition parameter zrk_a_pur_req_h [1] ;
 
+  action Convert_Into_PC ;
+
   mapping for ZRK_T_PUR_REQ_H
   {
 

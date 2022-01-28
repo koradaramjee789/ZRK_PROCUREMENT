@@ -14,6 +14,7 @@ define root view entity ZRK_I_PUR_CON_UD as select from zrk_t_pur_con
     fiscl_year as FisclYear,
     valid_from as ValidFrom,
     valid_to as ValidTo,
+    @Semantics.user.createdBy: true
     created_by as CreatedBy,
     created_at as CreatedAt,
     last_changed_by as LastChangedBy,
