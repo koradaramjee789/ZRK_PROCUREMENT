@@ -2,6 +2,7 @@
 @EndUserText.label: 'ZRK_I_PUR_CON_UD'
 define root view entity ZRK_I_PUR_CON_UD as select from zrk_t_pur_con
 
+composition [0..*] of ZRK_I_PUR_CON_I as _PurConItem 
 {
     key con_uuid as ConUuid,
     object_id as ObjectId,
@@ -19,5 +20,8 @@ define root view entity ZRK_I_PUR_CON_UD as select from zrk_t_pur_con
     created_at as CreatedAt,
     last_changed_by as LastChangedBy,
     last_changed_at as LastChangedAt,
-    locl_last_changed_at as LoclLastChangedAt
+    locl_last_changed_at as LoclLastChangedAt,
+    
+    _PurConItem
+
 }

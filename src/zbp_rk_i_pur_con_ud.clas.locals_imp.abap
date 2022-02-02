@@ -1,3 +1,88 @@
+CLASS lhc_purconitemcond DEFINITION INHERITING FROM cl_abap_behavior_handler.
+
+  PRIVATE SECTION.
+
+    METHODS update FOR MODIFY
+      IMPORTING entities FOR UPDATE PurConItemCond.
+
+    METHODS delete FOR MODIFY
+      IMPORTING keys FOR DELETE PurConItemCond.
+
+    METHODS read FOR READ
+      IMPORTING keys FOR READ PurConItemCond RESULT result.
+
+    METHODS rba_Purconitem FOR READ
+      IMPORTING keys_rba FOR READ PurConItemCond\_Purconitem FULL result_requested RESULT result LINK association_links.
+
+    METHODS rba_Purcon FOR READ
+      IMPORTING keys_rba FOR READ PurConItemCond\_Purcon FULL result_requested RESULT result LINK association_links.
+
+ENDCLASS.
+
+CLASS lhc_purconitemcond IMPLEMENTATION.
+
+  METHOD update.
+  ENDMETHOD.
+
+  METHOD delete.
+  ENDMETHOD.
+
+  METHOD read.
+  ENDMETHOD.
+
+  METHOD rba_Purconitem.
+  ENDMETHOD.
+
+  METHOD rba_Purcon.
+  ENDMETHOD.
+
+ENDCLASS.
+
+CLASS lhc_purconitem DEFINITION INHERITING FROM cl_abap_behavior_handler.
+
+  PRIVATE SECTION.
+
+    METHODS update FOR MODIFY
+      IMPORTING entities FOR UPDATE PurConItem.
+
+    METHODS delete FOR MODIFY
+      IMPORTING keys FOR DELETE PurConItem.
+
+    METHODS read FOR READ
+      IMPORTING keys FOR READ PurConItem RESULT result.
+
+    METHODS rba_Purcon FOR READ
+      IMPORTING keys_rba FOR READ PurConItem\_Purcon FULL result_requested RESULT result LINK association_links.
+    METHODS rba_Purconitemcond FOR READ
+      IMPORTING keys_rba FOR READ PurConItem\_Purconitemcond FULL result_requested RESULT result LINK association_links.
+
+    METHODS cba_Purconitemcond FOR MODIFY
+      IMPORTING entities_cba FOR CREATE PurConItem\_Purconitemcond.
+
+ENDCLASS.
+
+CLASS lhc_purconitem IMPLEMENTATION.
+
+  METHOD update.
+  ENDMETHOD.
+
+  METHOD delete.
+  ENDMETHOD.
+
+  METHOD read.
+  ENDMETHOD.
+
+  METHOD rba_Purcon.
+  ENDMETHOD.
+
+  METHOD rba_Purconitemcond.
+  ENDMETHOD.
+
+  METHOD cba_Purconitemcond.
+  ENDMETHOD.
+
+ENDCLASS.
+
 CLASS lhc_PurCon DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
 
@@ -25,6 +110,11 @@ CLASS lhc_PurCon DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR PurCon~set_pc_num.
     METHODS Forward FOR MODIFY
       IMPORTING keys FOR ACTION PurCon~Forward RESULT result.
+    METHODS rba_Purconitem FOR READ
+      IMPORTING keys_rba FOR READ PurCon\_Purconitem FULL result_requested RESULT result LINK association_links.
+
+    METHODS cba_Purconitem FOR MODIFY
+      IMPORTING entities_cba FOR CREATE PurCon\_Purconitem.
 
 ENDCLASS.
 
@@ -245,6 +335,12 @@ CLASS lhc_PurCon IMPLEMENTATION.
   ENDMETHOD.
 
 
+
+  METHOD rba_Purconitem.
+  ENDMETHOD.
+
+  METHOD cba_Purconitem.
+  ENDMETHOD.
 
 ENDCLASS.
 

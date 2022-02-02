@@ -1,0 +1,168 @@
+@Metadata.layer: #CORE
+
+@UI: {
+headerInfo: {
+    typeName: 'Purchase Contract Item',
+    typeNamePlural: 'Items',
+    title.value: 'PartNo',
+    description.value: 'Description'
+}
+}
+annotate entity ZRK_C_PUR_CON_I with
+{
+
+  @UI.facet: [{   id: 'General' ,
+                  label: 'General' ,
+                  purpose: #STANDARD ,
+                  position: 10 ,
+                  targetQualifier: 'QGeneral',
+                  type: #IDENTIFICATION_REFERENCE
+                  } ,
+
+                  {
+                  id: 'Conditions' ,
+                  label: 'Conditions' ,
+                  purpose: #STANDARD ,
+                  position: 20 ,
+                  targetElement: '_PurConItemCond',
+                  type: #LINEITEM_REFERENCE
+                  },
+
+                  {
+                  id: 'RelatedDocs' ,
+                  label: 'Related documents' ,
+                  purpose: #STANDARD ,
+                  position: 30 ,
+                  targetQualifier: 'QRelatedDocs',
+                  type: #IDENTIFICATION_REFERENCE
+                  }
+
+
+                  ]
+
+  @UI.hidden: true
+  ConUuid;
+  @UI:{
+   lineItem: [{ position: 10 }],
+   identification: [{ position: 10 , qualifier: 'QGeneral' }]
+  }
+  ItemNo;
+  @UI:{
+  lineItem: [{ position: 20 }],
+  identification: [{ position: 20 , qualifier: 'QGeneral' }]
+  }
+  Description;
+  @UI:{
+   lineItem: [{ position: 30 }],
+   identification: [{ position: 30 , qualifier: 'QGeneral' }]
+  }
+  @Consumption.valueHelpDefinition: [{
+  qualifier: '',
+  entity: {
+      name: 'ZRK_I_PARTS',
+      element: 'PartNo'
+  },
+        distinctValues: true,
+  useForValidation: true,
+  enabled: '',
+  additionalBinding: [{
+      localParameter: '',
+      localElement: 'CommCode',
+      localConstant: '',
+      parameter: '',
+      element: 'CategoryId',
+      usage: #FILTER_AND_RESULT
+  },
+  {
+      localParameter: '',
+      localElement: 'Unit',
+      localConstant: '',
+      parameter: '',
+      element: 'Unit',
+      usage: #FILTER_AND_RESULT
+  },
+  {
+      localParameter: '',
+      localElement: 'Description',
+      localConstant: '',
+      parameter: '',
+      element: 'Description',
+      usage: #FILTER_AND_RESULT
+  }],
+  label: '',
+  presentationVariantQualifier: ''
+
+  }]
+  PartNo;
+  @UI:{
+  lineItem: [{ position: 40 }],
+  identification: [{ position: 40 , qualifier: 'QGeneral'}]
+  }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_UnitOfMeasure',
+          element: 'UnitOfMeasure'
+      },
+      useForValidation: true,
+      label: 'Select currency from Dailog'
+  }]
+  Unit;
+  @UI:{
+  lineItem: [{ position: 50 }],
+  identification: [{ position: 50 }]
+  }
+  @Consumption.valueHelpDefinition: [{ entity: {
+   name: 'zrk_i_categories',
+   element: 'CategoryId'
+  } }]
+  CommCode;
+  @UI:{
+  lineItem: [{ position: 60 }],
+  identification: [{ position: 60 , qualifier: 'QGeneral'}]
+  }
+  Quantity;
+  @UI:{
+  lineItem: [{ position: 70 }],
+  identification: [{ position: 70 , qualifier: 'QGeneral'}]
+  }
+  Price;
+  //      @UI:{
+  //    lineItem: [{ position: 80 }],
+  //    identification: [{ position: 80 }]
+  //   }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_Currency',
+          element: 'Currency'
+      },
+      useForValidation: true,
+      label: 'Select currency from Dailog'
+  }]
+  Currency;
+  @UI:{
+  lineItem: [{ position: 80 }],
+  identification: [{ position: 10 , qualifier: 'QRelatedDocs' }]
+  }
+  SrcReqNo;
+  @UI:{
+  lineItem: [{ position: 90 }],
+  identification: [{ position: 20 , qualifier: 'QRelatedDocs'}]
+  }
+  SrcReqItem;
+  @UI.hidden: true
+  SrcOrdNo;
+  @UI.hidden: true
+  SrcOrdItem;
+  @UI.hidden: true
+  CreatedBy;
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+  @UI.hidden: true
+  LoclLastChangedAt;
+
+
+}

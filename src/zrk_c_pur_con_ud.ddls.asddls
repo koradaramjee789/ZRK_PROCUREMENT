@@ -20,6 +20,8 @@ as projection on ZRK_I_PUR_CON_UD
     CreatedAt,
     LastChangedBy,
     LastChangedAt,
-    LoclLastChangedAt
+    LoclLastChangedAt,
+    
+    _PurConItem : redirected to composition child ZRK_C_PUR_CON_i
     
 }

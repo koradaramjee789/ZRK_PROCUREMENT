@@ -3,11 +3,12 @@
 {
 "FROM":
 [
-"ZRK_T_PUR_CON"
+"ZRK_T_PUR_COND_I"
 ],
 "ASSOCIATED":
 [
-"ZRK_I_PUR_CON_I"
+"ZRK_I_PUR_CON_I",
+"ZRK_I_PUR_CON_UD"
 ],
 "BASE":
 [],

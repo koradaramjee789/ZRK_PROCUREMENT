@@ -6,9 +6,13 @@
 "ZRK_I_PUR_CON_UD"
 ],
 "ASSOCIATED":
-[],
+[
+"ZRK_C_PUR_CON_I"
+],
 "BASE":
-[],
+[
+"ZRK_I_PUR_CON_UD"
+],
 "ANNO_REF":
 [],
 "VERSION":0,

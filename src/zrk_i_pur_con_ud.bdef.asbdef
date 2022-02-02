@@ -4,7 +4,8 @@ with draft;
 define behavior for ZRK_I_PUR_CON_UD alias PurCon
 //late numbering
 draft table zrk_dt_pur_con_u
-lock master total etag LoclLastChangedAt
+lock master
+total etag LoclLastChangedAt
 authorization master ( instance )
 etag master LoclLastChangedAt
 {
@@ -14,6 +15,8 @@ etag master LoclLastChangedAt
   create;
   update;
   delete;
+
+  association _PurConItem { create; with draft;}
 
   //draft action Edit;
 
@@ -28,5 +31,46 @@ etag master LoclLastChangedAt
     Buyer = Buyer;
   }
 
+
+}
+
+define behavior for zrk_i_pur_con_i alias PurConItem
+draft table zrk_dt_pur_con_i
+lock dependent by _PurCon
+authorization dependent by _PurCon
+etag master LoclLastChangedAt
+
+{
+
+field ( numbering : managed ) ConItemUuid;
+
+update;
+delete;
+
+association _PurCon { with draft; }
+
+association _PurConItemCond { create ; with draft; }
+
+field ( readonly ) ConUuid , ItemNo , SrcReqItem , SrcReqNo , SrcOrdNo , SrcOrdItem;
+
+}
+
+
+define behavior for zrk_i_pur_cond_i alias PurConItemCond
+draft table zrk_dt_pur_cnd_i
+lock dependent by _PurCon
+authorization dependent by _PurCon
+etag master LoclLastChangedAt
+
+{
+
+field ( numbering : managed ) CondUuid;
+
+update;
+delete;
+
+association _PurCon { with draft; }
+association _PurConItem { with draft; }
+field ( readonly ) ConUuid, ConItemUuid ;
 
 }
