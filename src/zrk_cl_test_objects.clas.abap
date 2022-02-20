@@ -11,7 +11,9 @@ ENDCLASS.
 
 
 
-CLASS zrk_cl_test_objects IMPLEMENTATION.
+CLASS ZRK_CL_TEST_OBJECTS IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
 
@@ -21,5 +23,4 @@ CLASS zrk_cl_test_objects IMPLEMENTATION.
       RESULT DATA(lt_con).
 
   ENDMETHOD.
-
 ENDCLASS.

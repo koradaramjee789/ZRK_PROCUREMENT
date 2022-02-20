@@ -53,6 +53,7 @@
        <SERVICE_CONTENT>
         <item>
          <SERVICE_VERSION>0001</SERVICE_VERSION>
+         <RELEASE_STATE>NOT_RELEASED</RELEASE_STATE>
          <SRVD_REF>
           <URI>/sap/bc/adt/ddic/srvd/sources/%2fdmo%2fui_carriers_s</URI>
           <TYPE>SRVD/SRV</TYPE>

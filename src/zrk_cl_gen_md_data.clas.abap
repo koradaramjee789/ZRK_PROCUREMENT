@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zrk_cl_gen_md_data IMPLEMENTATION.
+CLASS ZRK_CL_GEN_MD_DATA IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
@@ -189,6 +189,17 @@ CLASS zrk_cl_gen_md_data IMPLEMENTATION.
                                                 ( client = sy-mandt plant_no ='0500' name = 'Karshule' )
      ) ).
 
+
+
+    DELETE FROM zrk_md_fisc_year.
+    INSERT zrk_md_fisc_year FROM TABLE @( VALUE #( ( client = sy-mandt fisclyear = '2021' )
+    ( client = sy-mandt fisclyear = '2022' )
+    ( client = sy-mandt fisclyear = '2023' )
+    ( client = sy-mandt fisclyear = '2024' )
+    ( client = sy-mandt fisclyear = '2025' )
+    ( client = sy-mandt fisclyear = '2026' )
+
+    )  ).
 
     COMMIT WORK.
 

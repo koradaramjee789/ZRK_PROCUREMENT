@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS zrk_cl_number_range IMPLEMENTATION.
+CLASS ZRK_CL_NUMBER_RANGE IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
