@@ -8,6 +8,6 @@ annotate entity ZRK_I_FWD_BUYER with
           element: 'BuyerId'
       }
    }]
-  Buyer;
+  ToBeBuyer;
 
 }

@@ -9,6 +9,7 @@ as projection on ZRK_I_PUR_CON_UD
     ObjectId,
     Description,
     Buyer,
+    @ObjectModel.text.element: ['Supplier_f4.Name']
     Supplier,
     SupConId,
     CompCode,
@@ -22,6 +23,8 @@ as projection on ZRK_I_PUR_CON_UD
     LastChangedAt,
     LoclLastChangedAt,
     
-    _PurConItem : redirected to composition child ZRK_C_PUR_CON_i
+    _PurConItem : redirected to composition child ZRK_C_PUR_CON_I,
+    
+    Supplier_f4
     
 }

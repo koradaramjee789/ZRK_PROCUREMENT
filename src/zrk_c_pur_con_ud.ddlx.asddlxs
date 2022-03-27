@@ -94,6 +94,7 @@ annotate entity ZRK_C_PUR_CON_UD with
   } ,
         useForValidation: true
   }]
+  
   Supplier;
 
   @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 50 ,qualifier: 'General'}]}
@@ -120,8 +121,30 @@ annotate entity ZRK_C_PUR_CON_UD with
         useForValidation: true
   }]
   CompCode;
-
+ @UI.selectionField: [{ position: 60 }]
   @UI:{ lineItem: [{ position: 60 }] , identification: [{ position: 60 ,qualifier: 'Header'}]}
+  @Consumption.valueHelpDefinition: [{
+      qualifier: '',
+      entity: {
+          name: 'ZRK_C_PC_STATUS',
+          element: 'Status'
+      }      ,
+//      association: '',
+//      distinctValues: true,
+//      useForValidation: true,
+//      enabled: '',
+      additionalBinding: [{
+//          localParameter: 'PUR_CON',
+//          localElement: '',
+//          localConstant: 'PUR_CON',
+//          parameter: 'P_APP',
+          element: '',
+          usage: #FILTER
+      }]
+//      label: '',
+//      presentationVariantQualifier: '',
+//      selectionVariantQualifier: ''
+  }]
   StatCode;
 
   @UI:{ lineItem: [{ position: 70 }] , identification: [{ position: 70 , qualifier: 'Validities' }]}

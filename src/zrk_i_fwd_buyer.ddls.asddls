@@ -3,6 +3,7 @@
 define abstract entity ZRK_I_FWD_BUYER
 
 {
-  Buyer : zrk_buyer_id;
+  @Consumption.defaultValue: 'RAMJEE'
+  ToBeBuyer : zrk_buyer_id;
 
 }

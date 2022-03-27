@@ -282,7 +282,7 @@ CLASS lhc_PurCon IMPLEMENTATION.
 */.. Get new buyer information
     READ TABLE keys ASSIGNING FIELD-SYMBOL(<fs_key>) INDEX 1.
     IF sy-subrc EQ 0.
-      DATA(lv_new_buyer) = <fs_key>-%param-Buyer.
+      DATA(lv_new_buyer) = <fs_key>-%param-ToBeBuyer.
     ENDIF.
 
 */..Create a draft instance for all active instance

@@ -3,6 +3,7 @@
 {
 "FROM":
 [
+"ZRK_I_BUYER",
 "ZRK_T_PUR_REQ_H"
 ],
 "ASSOCIATED":

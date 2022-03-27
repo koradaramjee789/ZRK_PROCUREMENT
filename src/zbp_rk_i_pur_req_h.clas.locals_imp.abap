@@ -141,6 +141,8 @@ CLASS lhc__PRHead IMPLEMENTATION.
          ALL FIELDS WITH CORRESPONDING #( keys )
          RESULT DATA(pr_head_read_result) FAILED failed.
 
+
+
     LOOP AT pr_head_read_result ASSIGNING FIELD-SYMBOL(<fs_head>).
 
       APPEND VALUE #( %cid = keys[ 1 ]-%cid
