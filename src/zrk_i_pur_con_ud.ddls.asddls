@@ -4,7 +4,8 @@ define root view entity ZRK_I_PUR_CON_UD as select from zrk_t_pur_con as PurCon
 
 composition [0..*] of ZRK_I_PUR_CON_I as _PurConItem 
 
-association [0..1] to ZRK_I_SUP_CON as Supplier_f4 on $projection.Supplier = PurCon.supplier
+association [1..1] to ZRK_I_SUPPLIER as Supplier_f4 on $projection.Supplier = Supplier_f4.SupNo
+association [1..1] to ZRK_I_BUYER as BuyerF4 on $projection.Buyer = BuyerF4.BuyerId
 
 {
     key con_uuid as ConUuid,
@@ -27,6 +28,7 @@ association [0..1] to ZRK_I_SUP_CON as Supplier_f4 on $projection.Supplier = Pur
     
     _PurConItem,
     
-    Supplier_f4
+    Supplier_f4,
+    BuyerF4
 
 }

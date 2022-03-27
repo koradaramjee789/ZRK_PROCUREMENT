@@ -8,9 +8,12 @@ as projection on ZRK_I_PUR_CON_UD
     key ConUuid,
     ObjectId,
     Description,
+    @ObjectModel.text.element: ['BuyerName']
     Buyer,
-    @ObjectModel.text.element: ['Supplier_f4.Name']
+    BuyerF4.Name as BuyerName ,
+    @ObjectModel.text.element: ['SupplierName']
     Supplier,
+    Supplier_f4.Name as SupplierName,
     SupConId,
     CompCode,
     StatCode,

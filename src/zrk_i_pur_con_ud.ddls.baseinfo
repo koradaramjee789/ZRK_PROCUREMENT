@@ -7,8 +7,9 @@
 ],
 "ASSOCIATED":
 [
+"ZRK_I_BUYER",
 "ZRK_I_PUR_CON_I",
-"ZRK_I_SUP_CON"
+"ZRK_I_SUPPLIER"
 ],
 "BASE":
 [],

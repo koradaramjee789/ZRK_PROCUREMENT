@@ -5,8 +5,11 @@
 annotate entity zrk_a_supplier
     with 
 {
-
-   @UI.identification: [{position: 10}]
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUPPLIER',
+      element: 'SupNo'
+  } } ]
+  @UI.identification: [{position: 10}]
    supplier;
     
 }
