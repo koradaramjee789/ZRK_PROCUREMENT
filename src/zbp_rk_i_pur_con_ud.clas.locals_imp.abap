@@ -115,6 +115,8 @@ CLASS lhc_PurCon DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS cba_Purconitem FOR MODIFY
       IMPORTING entities_cba FOR CREATE PurCon\_Purconitem.
+    METHODS set_output_med FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR PurCon~set_output_med.
 
 ENDCLASS.
 
@@ -122,9 +124,9 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
   METHOD get_instance_features.
 
-  if 1 = 2 .
+    IF 1 = 2 .
 
-  ENDIF.
+    ENDIF.
   ENDMETHOD.
 
   METHOD get_instance_authorizations.
@@ -147,6 +149,7 @@ CLASS lhc_PurCon IMPLEMENTATION.
       ls_pur_con-buyer = <fs_entity>-Buyer .
       ls_pur_con-supplier = <fs_entity>-Supplier .
       ls_pur_con-sup_con_id = <fs_entity>-SupConId .
+      ls_pur_con-send_via = <fs_entity>-SendVia.
       ls_pur_con-comp_code = <fs_entity>-CompCode .
       ls_pur_con-stat_code = <fs_entity>-StatCode .
       ls_pur_con-valid_from = <fs_entity>-Validfrom .
@@ -186,6 +189,9 @@ CLASS lhc_PurCon IMPLEMENTATION.
       ls_pur_con-comp_code = COND #( WHEN <fs_entity>-%control-CompCode EQ '01'
                                         THEN <fs_entity>-CompCode
                                         ELSE ls_pur_con-comp_code ) .
+      ls_pur_con-send_via = COND #( WHEN <fs_entity>-%control-SendVia EQ '01'
+                                        THEN <fs_entity>-SendVia
+                                        ELSE ls_pur_con-send_via ) .
       ls_pur_con-stat_code = <fs_entity>-StatCode .
       ls_pur_con-valid_from = COND #( WHEN <fs_entity>-%control-ValidFrom EQ '01'
                                       THEN <fs_entity>-Validfrom
@@ -232,6 +238,7 @@ CLASS lhc_PurCon IMPLEMENTATION.
       <fs_result>-Buyer = ls_pur_con-buyer.
       <fs_result>-Supplier = ls_pur_con-supplier.
       <fs_result>-SupConId = ls_pur_con-sup_con_id.
+      <fs_result>-SendVia = ls_pur_con-send_via.
       <fs_result>-CompCode = ls_pur_con-comp_code.
       <fs_result>-ValidFrom = ls_pur_con-valid_from.
       <fs_result>-ValidTo = ls_pur_con-valid_to.
@@ -301,7 +308,7 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
     DATA(lt_temp_keys) = keys.
     LOOP AT lt_temp_keys ASSIGNING FIELD-SYMBOL(<fs_temp_keys>).
-        <fs_temp_keys>-%is_draft = if_abap_behv=>mk-on.
+      <fs_temp_keys>-%is_draft = if_abap_behv=>mk-on.
     ENDLOOP.
 
 */.. Read the existing Data
@@ -340,6 +347,52 @@ CLASS lhc_PurCon IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD cba_Purconitem.
+  ENDMETHOD.
+
+  METHOD set_output_med.
+
+
+    READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
+    ENTITY PurCon
+    FIELDS ( SupConId SendVia sent_via_text )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_con).
+
+    SELECT sup_con_id , app_access , email_id
+      FROM zrk_md_sup_con AS a
+      INNER JOIN @lt_con AS b ON a~sup_con_id = b~SupConId
+      INTO TABLE @DATA(lt_sup_con_data).
+    IF sy-subrc EQ 0.
+      SORT lt_sup_con_data BY sup_con_id.
+    ENDIF.
+
+    LOOP AT lt_con ASSIGNING FIELD-SYMBOL(<fs_con>).
+      READ TABLE lt_sup_con_data ASSIGNING FIELD-SYMBOL(<fs_sup_con>)
+          WITH KEY sup_con_id = <fs_con>-SupConId BINARY SEARCH.
+      IF sy-subrc EQ 0.
+        IF <fs_sup_con>-app_access = abap_true.
+          <fs_con>-SendVia = 'EDI'.
+          <fs_con>-sent_via_text = 'Application'.
+        ELSEIF <fs_sup_con>-email_id IS NOT INITIAL.
+          <fs_con>-SendVia = 'MAI'.
+          <fs_con>-sent_via_text = 'Mail'.
+        ELSE.
+          <fs_con>-SendVia = 'PRN'.
+          <fs_con>-sent_via_text = 'Print'.
+        ENDIF.
+      ELSE.
+        <fs_con>-SendVia = 'PRN'.
+      ENDIF.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zrk_i_pur_con_ud
+  IN LOCAL MODE
+  ENTITY PurCon
+  UPDATE FIELDS ( SendVia sent_via_text )
+   WITH VALUE #( FOR <fs_rec> IN lt_con ( %tky = <fs_rec>-%tky
+                                          SendVia = <fs_rec>-SendVia
+                                          sent_via_text = <fs_rec>-sent_via_text ) ).
+
   ENDMETHOD.
 
 ENDCLASS.

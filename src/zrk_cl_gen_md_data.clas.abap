@@ -55,7 +55,7 @@ CLASS ZRK_CL_GEN_MD_DATA IMPLEMENTATION.
                     ( client = sy-mandt sup_no = 'S000000009' sup_con_id = 'CP00000007' name = 'Nadine Busch' app_access = ' ' email_id = 'Nadi@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000001' sup_con_id = 'CP00000008' name = 'Klaus Albrecht' app_access = ' ' email_id = 'Klau@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000009' name = 'Tilla Lorenz' app_access = 'X' email_id = 'Till@abhi@com' )
-                    ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000010' name = 'Amalie Köhler' app_access = ' ' email_id = 'Amal@abhi@com' )
+                    ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000010' name = 'Amalie Köhler' app_access = ' ' email_id = '' )
                     ( client = sy-mandt sup_no = 'S000000003' sup_con_id = 'CP00000011' name = 'Stefan Neumann' app_access = 'X' email_id = 'Stef@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000004' sup_con_id = 'CP00000012' name = 'Elisabeth Martin' app_access = ' ' email_id = 'Elis@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000006' sup_con_id = 'CP00000013' name = 'Marius Schulte' app_access = ' ' email_id = 'Mari@abhi@com' )
@@ -63,7 +63,7 @@ CLASS ZRK_CL_GEN_MD_DATA IMPLEMENTATION.
                     ( client = sy-mandt sup_no = 'S000000001' sup_con_id = 'CP00000015' name = 'Lisa Schmitz' app_access = ' ' email_id = 'Lisa@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000016' name = 'Lina Frank' app_access = ' ' email_id = 'Lina@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000017' name = 'Margarete Lang' app_access = ' ' email_id = 'Marg@abhi@com' )
-                    ( client = sy-mandt sup_no = 'S000000003' sup_con_id = 'CP00000018' name = 'Helma Schreiber' app_access = 'X' email_id = 'Helm@abhi@com' )
+                    ( client = sy-mandt sup_no = 'S000000003' sup_con_id = 'CP00000018' name = 'Helma Schreiber' app_access = 'X' email_id = '' )
                     ( client = sy-mandt sup_no = 'S000000001' sup_con_id = 'CP00000019' name = 'Josefa Krüger' app_access = ' ' email_id = 'Jose@abhi@com' )
                     ( client = sy-mandt sup_no = 'S000000002' sup_con_id = 'CP00000020' name = 'Janis Winter' app_access = ' ' email_id = 'Jani@abhi@com' )
         ).

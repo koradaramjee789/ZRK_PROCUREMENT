@@ -111,7 +111,12 @@ annotate entity ZRK_C_PUR_CON_UD with
         useForValidation: true
   }]
   SupConId;
-
+    @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SEND_VIA',
+      element: 'SendVia'
+  } }]
+  @UI.identification: [{ position: 52  , qualifier: 'General'}]
+ SendVia;
   @UI.selectionField: [{ position: 50 }]
   @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 55 ,qualifier: 'General'}]}
   @Consumption.valueHelpDefinition: [{ entity: {

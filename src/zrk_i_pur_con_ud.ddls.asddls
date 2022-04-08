@@ -6,6 +6,8 @@ composition [0..*] of ZRK_I_PUR_CON_I as _PurConItem
 
 association [1..1] to ZRK_I_SUPPLIER as Supplier_f4 on $projection.Supplier = Supplier_f4.SupNo
 association [1..1] to ZRK_I_BUYER as BuyerF4 on $projection.Buyer = BuyerF4.BuyerId
+association [0..1] to zrk_md_send_via as SendViaF4 on $projection.SendVia = SendViaF4.send_via
+ 
 
 {
     key con_uuid as ConUuid,
@@ -19,6 +21,8 @@ association [1..1] to ZRK_I_BUYER as BuyerF4 on $projection.Buyer = BuyerF4.Buye
     fiscl_year as FisclYear,
     valid_from as ValidFrom,
     valid_to as ValidTo,
+    send_via as SendVia,
+     SendViaF4.sent_via_text,
     @Semantics.user.createdBy: true
     created_by as CreatedBy,
     created_at as CreatedAt,
@@ -29,6 +33,7 @@ association [1..1] to ZRK_I_BUYER as BuyerF4 on $projection.Buyer = BuyerF4.Buye
     _PurConItem,
     
     Supplier_f4,
-    BuyerF4
+    BuyerF4,
+    SendViaF4
 
 }

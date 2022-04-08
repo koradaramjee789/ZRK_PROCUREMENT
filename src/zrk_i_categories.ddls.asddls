@@ -3,6 +3,7 @@
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'data definition for categories'
+@ObjectModel.resultSet.sizeCategory: #XS
 define view zrk_i_categories as select from zrk_md_category {
 @ObjectModel.text.element: ['Description']
 @UI.hidden: true
