@@ -6,7 +6,8 @@ CLASS lhc__pritem DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR ACTION _PRItem~assignSupplier RESULT result.
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR _PRItem RESULT result.
-
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR _PRItem RESULT result.
 ENDCLASS.
 
 CLASS lhc__pritem IMPLEMENTATION.
@@ -48,6 +49,57 @@ CLASS lhc__pritem IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_authorizations.
+
+    IF sy-subrc EQ 0.
+
+    ENDIF.
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+       ENTITY _PRHead BY \_PRItem
+       ALL FIELDS WITH CORRESPONDING #( keys )
+       RESULT DATA(pr_item_read_result) FAILED failed.
+
+    SELECT * FROM
+       zrk_i_pur_req_i AS a
+       INNER JOIN @pr_item_read_result AS b
+       ON a~ObjectId = b~ObjectId
+       AND a~ItemNo = b~ItemNo
+       INTO TABLE @DATA(lt_active_items).
+
+    IF sy-subrc = 0.
+
+*    result =  VALUE #( for <fs_key> in keys (  %tky = <fs_key>-%tky
+*                                               %acti ).
+
+    ENDIF.
+
+
+  ENDMETHOD.
+
+  METHOD get_instance_features.
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+     ENTITY _PRHead BY \_PRItem
+     ALL FIELDS WITH CORRESPONDING #( keys )
+     RESULT DATA(pr_item_read_result) FAILED failed.
+
+    SELECT a~* FROM
+       zrk_i_pur_req_i AS a
+       INNER JOIN @pr_item_read_result AS b
+       ON a~ObjectId = b~ObjectId
+       AND a~ItemNo = b~ItemNo
+       INTO TABLE @DATA(lt_active_items).
+
+    IF sy-subrc = 0.
+
+      result =  VALUE #( FOR <fs_key> IN keys (  %tky = <fs_key>-%tky
+                                                 %delete  = COND #( WHEN line_exists( lt_active_items[ objectid = <fs_key>-ObjectId itemno = <fs_key>-itemno ] )
+                                                                  THEN if_abap_behv=>fc-o-disabled
+                                                                  ELSE if_abap_behv=>fc-o-enabled )
+                                                                   ) ).
+
+    ENDIF.
+
   ENDMETHOD.
 
 ENDCLASS.
@@ -63,6 +115,8 @@ CLASS lhc__PRHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR ACTION _prhead~copyrequisition.
     METHODS convert_into_pc FOR MODIFY
       IMPORTING keys FOR ACTION _prhead~convert_into_pc .
+    METHODS completepr FOR MODIFY
+      IMPORTING keys FOR ACTION _prhead~completepr RESULT result.
     METHODS earlynumbering_cba_pritem FOR NUMBERING
       IMPORTING entities FOR CREATE _prhead\_pritem.
     METHODS earlynumbering_create FOR NUMBERING
@@ -80,6 +134,8 @@ CLASS lhc__PRHead IMPLEMENTATION.
     IF 1 = 2.
 
     ENDIF.
+
+
 
   ENDMETHOD.
 
@@ -289,6 +345,56 @@ CLASS lhc__PRHead IMPLEMENTATION.
      ) ).
 
 *    result = CORRESPONDING #( lt_pur_req ).
+
+  ENDMETHOD.
+
+  METHOD CompletePR.
+
+*Modify the entities with required fields.
+    MODIFY ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+      ENTITY _PRHead
+      UPDATE FIELDS ( StatCode )
+          WITH VALUE #( FOR key IN keys ( %tky = key-%tky
+                                          StatCode ='CMPL' ) ).
+
+* Check if there are any draft instances?
+    DATA(lt_draft_docs) = keys.
+    DELETE lt_draft_docs WHERE %is_draft = if_abap_behv=>mk-off.
+
+    IF lt_draft_docs IS NOT INITIAL.
+
+* EXECUTE Active only on draft instances.
+
+        MODIFY ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+          ENTITY _PRHead
+            EXECUTE Activate FROM
+            VALUE #( FOR key IN keys ( %key = key-%key ) )
+          REPORTED DATA(activate_reported)
+          FAILED DATA(activate_failed)
+          MAPPED DATA(activate_mapped).
+
+   ENDIF.
+
+* Change Keys to read active Instance
+    DATA(lt_keys) = keys.
+    LOOP AT lt_keys ASSIGNING FIELD-SYMBOL(<ls_key>).
+      <ls_key>-%is_draft = if_abap_behv=>mk-off.
+    ENDLOOP.
+
+* Read the active instance to send back to Fiori App.
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+        ENTITY _PRHead
+        ALL FIELDS WITH CORRESPONDING #( lt_keys )
+        RESULT DATA(lt_pur_req).
+
+* Populate %key , %tky  to be filled from source instance while %param-%key to be filled from new instance.
+    result = VALUE #( for <fs_old_key> in keys
+                      for <fs_new_key> IN lt_keys WHERE ( ObjectId = <Fs_old_key>-ObjectId )
+                                                    ( %key = <fs_old_key>-%key
+                                                      %tky = <fs_old_key>-%tky
+                                                      %param-%key = <fs_new_key>-%key ) ).
+
+    mapped-_prhead = CORRESPONDING #( lt_pur_req ).
 
   ENDMETHOD.
 

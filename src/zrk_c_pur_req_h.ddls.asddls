@@ -1,5 +1,6 @@
 @EndUserText.label: 'Projection for purchase requisition header'
 @AccessControl.authorizationCheck: #CHECK
+@ObjectModel.semanticKey: ['ObjectId']
 define root view entity ZRK_C_PUR_REQ_H 
 provider contract transactional_query
 as projection on ZRK_I_PUR_REQ_H 

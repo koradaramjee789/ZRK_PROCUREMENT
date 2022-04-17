@@ -22,6 +22,8 @@ early numbering
 
   action Convert_Into_PC ;
 
+  action CompletePR result [1] entity ZRK_I_PUR_REQ_H;
+
   mapping for ZRK_T_PUR_REQ_H
   {
 
@@ -46,9 +48,10 @@ etag master LastChangedAt
 early numbering
 {
   update;
-  delete;
-  field ( readonly ) ObjectId ;
-  association _PRHead { with draft; }
+  delete ( features : instance );
+  field ( readonly ) ObjectId , ItemNo;
+  association _PRHead { with draft;
+  }
 
   action assignSupplier parameter zrk_a_supplier result [1] $self;
 
