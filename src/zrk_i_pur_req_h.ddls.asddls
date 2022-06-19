@@ -1,7 +1,6 @@
 @AccessControl.authorizationCheck: #CHECK
 @EndUserText.label: 'Data definition for pur requisition'
 @Metadata.allowExtensions: true
-@ObjectModel.semanticKey: ['ObjectId']
 define root view entity ZRK_I_PUR_REQ_H 
 as select from zrk_t_pur_req_h as PRHead
 composition [0..*] of ZRK_I_PUR_REQ_I as _PRItem

@@ -124,9 +124,25 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
   METHOD get_instance_features.
 
-    IF 1 = 2 .
+    READ ENTITIES OF zrk_i_pur_con_ud
+      IN LOCAL MODE
+      ENTITY PurCon
+      FIELDS ( ConUuid ObjectId Buyer )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_con).
 
-    ENDIF.
+      result = value #( FOR <fs_key> in keys ( %tky = <fs_key>-%tky
+                                               %action-Forward = COND #( WHEN line_exists( lt_con[ %tky = <fs_key>-%tky Buyer = 'BUY0000005' ] )
+                                                                        then if_abap_behv=>fc-o-disabled
+                                                                        ELSE if_abap_behv=>fc-o-enabled
+                                                        ) ) ) .
+
+*      result =  VALUE #( FOR <fs_key> IN keys (  %tky = <fs_key>-%tky
+*                                                %features-%action-Edit
+**                                                 %delete  = COND #( WHEN line_exists( lt_con[ objectid = <fs_key>-ObjectId itemno = <fs_key>-itemno ] )
+**                                                                  THEN if_abap_behv=>fc-o-disabled
+**                                                                  ELSE if_abap_behv=>fc-o-enabled )
+*                                                                   ) ).
   ENDMETHOD.
 
   METHOD get_instance_authorizations.

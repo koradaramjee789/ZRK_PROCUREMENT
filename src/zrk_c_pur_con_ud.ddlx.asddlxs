@@ -53,7 +53,9 @@ annotate entity ZRK_C_PUR_CON_UD with
       position: 10 ,
       type: #FOR_ACTION,
       label: 'Forward',
-      dataAction: 'Forward'
+      dataAction: 'Forward',
+      invocationGrouping: #CHANGE_SET
+      
   }]
   @UI.identification: [{
     position: 10 ,

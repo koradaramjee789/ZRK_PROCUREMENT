@@ -93,6 +93,7 @@ CLASS lhc__pritem IMPLEMENTATION.
     IF sy-subrc = 0.
 
       result =  VALUE #( FOR <fs_key> IN keys (  %tky = <fs_key>-%tky
+*                                                 %update = if_abap_behv=>fc-o-disabled
                                                  %delete  = COND #( WHEN line_exists( lt_active_items[ objectid = <fs_key>-ObjectId itemno = <fs_key>-itemno ] )
                                                                   THEN if_abap_behv=>fc-o-disabled
                                                                   ELSE if_abap_behv=>fc-o-enabled )

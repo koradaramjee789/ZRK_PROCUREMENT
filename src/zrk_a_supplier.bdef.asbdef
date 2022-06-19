@@ -1,6 +1,7 @@
 abstract;
-strict;
 
 define behavior for zrk_a_supplier //alias <alias_name>
+
 {
+field ( readonly  ) supplier;
 }

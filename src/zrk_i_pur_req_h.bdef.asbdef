@@ -47,7 +47,7 @@ authorization dependent by _PRHead
 etag master LastChangedAt
 early numbering
 {
-  update;
+  update ( features : instance );
   delete ( features : instance );
   field ( readonly ) ObjectId , ItemNo;
   association _PRHead { with draft;

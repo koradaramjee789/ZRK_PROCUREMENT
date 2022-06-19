@@ -24,7 +24,7 @@ etag master LoclLastChangedAt
   determination set_pc_num on modify { create; }
 
   //static
-  action Forward parameter ZRK_I_FWD_BUYER result [1] ZRK_I_PUR_CON_UD ;
+  action  ( features: instance )  Forward parameter ZRK_I_FWD_BUYER result [1] ZRK_I_PUR_CON_UD  ;
 
 
   mapping for zrk_i_fwd_buyer control zrk_s_fwd_buyer_intx
