@@ -1,0 +1,17 @@
+unmanaged implementation in class zbp_rk_i_pur_con unique;
+strict;
+
+define behavior for Zrk_I_Pur_Con alias PurCon
+late numbering
+lock master
+authorization master ( instance )
+etag master LoclLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( mandatory ) Buyer, Supplier, SupConId ;
+
+  static function DefaultForCreate result [1] $self;
+}

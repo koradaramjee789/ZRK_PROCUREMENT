@@ -1,0 +1,4 @@
+@EndUserText.label: 'SD for approval documents'
+define service ZRK_UI_CE_APPR_DOCS {
+  expose ZRK_CE_APPR_DOCS as ApprovalDoc;
+}

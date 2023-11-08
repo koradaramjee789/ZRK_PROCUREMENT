@@ -1,0 +1,36 @@
+projection;
+strict;
+use draft;
+
+
+define behavior for ZRK_C_PUR_REQ_H alias PRHead
+{
+  use create;
+  use update;
+  use delete;
+
+  use action copyRequisition;
+
+  use action Convert_Into_PC;
+
+
+  use action CompletePR result entity ZRK_C_PUR_REQ_H;
+  use association _PRItem { create; with draft; }
+
+  use action Edit;
+  use action Discard;
+  use action Activate;
+  use action Prepare;
+  use action Resume;
+}
+
+define behavior for ZRK_C_PUR_REQ_I alias PRItem
+{
+  use update;
+  use delete;
+
+  use association _PRHead { with draft; }
+
+  use action assignSupplier;
+
+}

@@ -1,0 +1,90 @@
+managed implementation in class zbp_rk_i_pur_req_h unique;
+strict ( 1 );
+with draft;
+
+
+define behavior for ZRK_I_PUR_REQ_H alias _PRHead
+persistent table zrk_t_pur_req_h
+draft table zrk_dt_pur_req_h
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+early numbering
+{
+  create;
+  update;
+  delete;
+  association _PRItem { create; with draft; }
+
+
+  draft action Resume with additional implementation;
+  draft action Activate with additional implementation;
+  draft action Edit with additional implementation;
+  draft action Discard;
+  draft determine action Prepare;
+
+  field ( readonly ) ObjectId, StatCode;
+
+  determination DetOnModify on modify { create;  }
+
+  factory action copyRequisition parameter zrk_a_pur_req_h [1];
+
+  action ( features : instance, precheck ) Convert_Into_PC;
+
+
+
+  action CompletePR result [1] entity ZRK_I_PUR_REQ_H;
+  mapping for zrk_t_pur_req_h
+    {
+      ObjectId      = object_id;
+      Description   = description;
+      StatCode      = stat_code;
+      Buyer         = buyer;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+
+
+
+}
+
+define behavior for ZRK_I_PUR_REQ_I alias _PRItem
+persistent table zrk_t_pur_req_i
+draft table zrk_dt_pur_req_i
+lock dependent by _PRHead
+authorization dependent by _PRHead
+etag master LastChangedAt
+early numbering
+{
+  update ( features : instance );
+  delete ( features : instance );
+  field ( readonly ) ObjectId, ItemNo;
+  association _PRHead
+  { with draft;
+  }
+
+  action ( precheck ) assignSupplier parameter zrk_a_supplier result [1] $self;
+  mapping for zrk_t_pur_req_i
+    {
+      ObjectId      = object_id;
+      ItemNo        = item_no;
+      Description   = description;
+      PartNo        = part_no;
+      unit          = unit;
+      CommCode      = comm_code;
+      Plant         = plant;
+      Supplier      = supplier;
+      Quantity      = quantity;
+      Price         = price;
+      Currency      = currency;
+      CreatedAt     = created_at;
+      CreatedBy     = created_by;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
+
+
+}

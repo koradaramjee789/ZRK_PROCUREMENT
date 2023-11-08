@@ -1,0 +1,10 @@
+@EndUserText.label: 'ZRK_UI_PUR_CON_UD'
+@ObjectModel.leadingEntity.name: 'ZRK_C_PUR_CON_UD'
+define service ZRK_UI_PUR_CON_UD {
+  expose ZRK_C_PUR_CON_UD     as PurCon;
+  expose ZRK_C_PUR_CON_I      as PurConItems;
+  expose ZRK_C_PUR_COND_I     as PurConItemConds;
+  expose ZRK_C_PUR_CON_ATT    as PurConAtt;
+  expose ZRK_I_BUYER          as BuyerF4;
+  expose ZRK_CE_Renewal_Codes as RenewalCodesF4;
+}

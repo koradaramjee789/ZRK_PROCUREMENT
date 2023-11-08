@@ -1,0 +1,18 @@
+abstract;
+strict(2);
+with hierarchy;
+
+define behavior for ZRK_A_PartialPrToPCHead alias Root
+{
+
+//field ( notrigger ) Buyer ;
+association _Items ;
+
+}
+
+define behavior for ZRK_A_PartialPrToPC alias Item
+{
+
+
+
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'service definition for Sales Order'
+define service ZRK_SD_SAL_ORD {
+  expose ZRK_C_SAL_ORD as SalesOrder;
+  expose ZRK_C_SAL_ORD_I as SalesOrderItems;
+}

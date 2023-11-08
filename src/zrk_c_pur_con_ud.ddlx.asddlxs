@@ -1,0 +1,256 @@
+ @Metadata.layer: #CORE
+ @UI: {
+   headerInfo: {
+     typeName: 'Purchase Contract',
+     typeNamePlural: 'Purchase Contracts',
+     description: {
+     type: #STANDARD,
+     value: 'Description'
+         },
+     title: {
+         value: 'ObjectId'
+         },
+       typeImageUrl: 'sap-icon://customer-order-entry'
+     }
+
+ }
+ @Search.searchable: true
+ @UI.presentationVariant: [{
+     sortOrder: [{
+         by: 'ObjectId',
+         direction: #DESC
+     }]
+  }]
+
+ @UI.updateHidden: #(HideActEditFlag)
+
+ annotate entity ZRK_C_PUR_CON_UD with
+{
+
+  @UI.facet: [
+
+      {
+      purpose: #HEADER,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'QStatus'
+      ,hidden: #(DraftFlag)
+    },
+        {
+      purpose: #HEADER,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'QVersion'
+    },
+  {
+          id: 'Header',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Header',
+          purpose: #HEADER,
+          position: 10,
+          qualifier: 'Header'
+  },
+  {     id: 'General',
+        type: #IDENTIFICATION_REFERENCE,
+        purpose: #STANDARD,
+        label: 'General',
+        position: 20 ,
+        targetQualifier: 'General'},
+
+  {     id: 'Validities',
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Validities',
+        position: 30 ,
+        targetQualifier: 'Validities'},
+      { id: 'Items' ,
+        purpose: #STANDARD ,
+        type:            #LINEITEM_REFERENCE,
+        position:        40  ,
+        label: 'Items',
+        targetElement: '_PurConItem'
+      },
+            { id: 'Attachments' ,
+        purpose: #STANDARD ,
+        type:            #LINEITEM_REFERENCE,
+        position:        50  ,
+        label: 'Attachments',
+        targetElement: 'Attachments'
+      }
+
+   ]
+
+
+
+  @UI.hidden: true
+  @UI.lineItem: [{
+      position: 10 ,
+      type: #FOR_ACTION,
+      label: 'Forward',
+      dataAction: 'Forward',
+      invocationGrouping: #CHANGE_SET
+
+  },
+  {
+   type: #FOR_ACTION, dataAction: 'Renewal_doc' , label: 'Renew Doc'
+  },
+  {
+   type: #FOR_ACTION, dataAction: 'Partial_PR_To_PC' , label: 'Append PR to PC'
+  }
+  ]
+  @UI.identification: [{
+            position: 10 ,
+            type: #FOR_ACTION, dataAction: 'Forward' , label: 'Forward Doc' , hidden: #(HideActForwardFlag)  },
+          { type: #FOR_ACTION, dataAction: 'refresh_doc', label: 'Refresh' , iconUrl: 'sap-icon://refresh'  } ,
+          { type: #FOR_ACTION, dataAction: 'SendForApproval', label: 'Send for approval' , iconUrl: 'sap-icon://refresh' , hidden: #(HideActSendApprovalFlag) } ]
+  ConUuid;
+
+  @UI:{ lineItem: [{ position: 10 }]
+  , identification: [{ hidden: true }]  //position: 10 , qualifier: 'Header'}]
+  }
+  @UI.selectionField: [{ position: 10 }]
+  @Search.defaultSearchElement: true
+  ObjectId;
+
+  @UI.selectionField: [{ position: 20 }]
+  @UI:{ lineItem: [{ position: 20 }] , identification: [{ position: 10 , qualifier: 'General'}]}
+  @Search.defaultSearchElement: true
+  Description;
+
+  @UI.selectionField: [{ position: 40 }]
+  @UI:{ lineItem: [ { hidden: true }] ,
+        identification: [{ position: 30 , qualifier: 'General' , hidden: #( IsActiveEntity ) }]}
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZRK_I_BUYER',
+          element: 'BuyerId'
+      }
+   }]
+  @Search.defaultSearchElement: true
+  // @Consumption.semanticObject: 'CSOBuyer'
+  Buyer;
+
+  @UI:{ lineItem: [{ position: 35 , type: #AS_CONTACT ,value: 'BuyerF4'   }] ,
+         identification: [{ position: 35 , qualifier: 'General' , type: #AS_CONTACT ,value: 'BuyerF4' ,  hidden: #( HasDraftEntity ) }]}
+  // @Consumption.semanticObject: 'CSOBuyer'
+  //  @UI.hidden: true
+  BuyerDisp;
+
+  @UI.selectionField: [{ position: 30 }]
+  @UI:{ lineItem: [{ position: 40 }] , identification: [{ position: 40 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUPPLIER',
+      element: 'SupNo'
+  } ,
+        useForValidation: true
+  }]
+
+  Supplier;
+
+  @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 50 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUP_CON',
+      element: 'SupConId'
+      } ,
+      additionalBinding: [{
+          localElement: 'Supplier',
+          localConstant: '',
+          element: 'SupNo',
+          usage: #FILTER_AND_RESULT
+      }] ,
+            useForValidation: true
+  }]
+  SupConId;
+  @Consumption.valueHelpDefinition: [{ entity: {
+    name: 'ZRK_I_SEND_VIA',
+    element: 'SendVia'
+  } }]
+  @UI.identification: [{ position: 52  , qualifier: 'General'}]
+  SendVia;
+  @UI.selectionField: [{ position: 50 }]
+  @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 55 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_COMP_CODE',
+      element: 'CompCode'
+  } ,
+        useForValidation: true
+  }]
+  CompCode;
+  @UI.selectionField: [{ position: 60 }]
+  @UI:{ lineItem: [{ position: 60 }] , identification: [{ position: 60 ,qualifier: 'Header'}]}
+  @Consumption.valueHelpDefinition: [{
+      qualifier: '',
+      entity: {
+          name: 'ZRK_C_PC_STATUS',
+          element: 'Code'
+      }      ,
+  //      association: '',
+  //      distinctValues: true,
+  //      useForValidation: true,
+  //      enabled: '',
+      additionalBinding: [{
+  //          localParameter: 'PUR_CON',
+  //          localElement: '',
+  //          localConstant: 'PUR_CON',
+  //          parameter: 'P_APP',
+          element: '',
+          usage: #FILTER
+      }]
+  //      label: '',
+  //      presentationVariantQualifier: '',
+  //      selectionVariantQualifier: ''
+  }]
+  @UI.dataPoint: {
+      qualifier: 'QStatus',
+      title: 'Status'
+  }
+  @UI.identification: [{ hidden: true }]
+  StatCode;
+
+  @UI.dataPoint: {
+    qualifier: 'QVersion',
+    title: 'Version'
+  }
+  VersionNo;
+
+  @UI:{ lineItem: [{ position: 65 }] , identification: [{ position: 65 , qualifier: 'General' }]}
+  TargetValue;
+  @Consumption.valueHelpDefinition: [{
+  entity: {
+      name: 'I_Currency',
+      element: 'Currency'
+  },
+  useForValidation: true,
+  label: 'Select currency from Dailog'
+  }]
+  currency;
+  @UI:{ lineItem: [{ position: 70 }] , identification: [{ position: 70 , qualifier: 'Validities' }]}
+  ValidFrom;
+
+  @UI:{ lineItem: [{ position: 80 }] , identification: [{ position: 80 , qualifier: 'Validities' }]}
+  ValidTo;
+
+  @UI:{ lineItem: [{ position: 80 }] , identification: [{ position: 90 , qualifier: 'Validities' }]}
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZRK_I_FISCAL_YEAR',
+          element: 'fiscal_year'
+      }
+   }]
+  FisclYear;
+  @UI.hidden: true
+  ReleasedAtLeastOnce;
+  @UI:{  identification: [{ position: 85, qualifier: 'General' , label: 'Is urgent?' }]}
+  urgent_flag;
+  @UI:{  identification: [{ position: 86, qualifier: 'General' , label: 'Urgent Comments' , hidden: #(AdhocUrgent) }]}
+  urgent_comments;
+  @UI:{ lineItem: [{ position: 90 }] , identification: [{ position: 100, qualifier: 'General' , label: 'Created By' }]}
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+  @UI.hidden: true
+  LoclLastChangedAt;
+
+}

@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+
+define behavior for ZRK_C_SAL_ORD alias SalesOrder
+{
+  use create;
+  use update;
+  use delete;
+
+  use action CreateHeaderInPopup ;
+
+  use association _Items { create; }
+}
+
+define behavior for ZRK_C_SAL_ORD_I alias SalesOrderItems
+{
+  use update;
+  use delete;
+
+  use association _Header;
+}

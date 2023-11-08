@@ -1,0 +1,30 @@
+managed implementation in class zrk_bp_sup_con_data unique;
+strict;
+with draft;
+
+define behavior for ZRK_I_SUP_CON_DATA alias SupConData
+persistent table zrk_md_sup_con
+draft table ZRK_SUP_CON_DT_D
+lock master total etag LocalLastChangedAt
+authorization master( global )
+
+{
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZRK_MD_SUP_CON
+  {
+    SupNo = SUP_NO;
+    SupConID = SUP_CON_ID;
+    Name = NAME;
+    AppAccess = APP_ACCESS;
+    EmailID = EMAIL_ID;
+  }
+}

@@ -1,0 +1,73 @@
+@Metadata.layer: #CORE
+@UI: {
+headerInfo: {
+    typeName: 'Purchase Contract Attachment',
+    typeNamePlural: 'Attachments',
+    title.value: 'AttUuid',
+//    description.value: 'AttUuid',
+//    imageUrl: 'Attachment'
+    
+    title: { type: #STANDARD },
+    description: { type: #STANDARD, value: 'LastChangedBy' } },
+         presentationVariant: [{
+         sortOrder: [{ by: 'AttUuid', direction: #ASC }],
+         visualizations: [{type: #AS_LINEITEM}] }] 
+        
+         } 
+
+               
+annotate entity ZRK_C_PUR_CON_ATT
+    with 
+{
+
+  @UI.facet: [    {
+                label: 'General Information',
+                id: 'GeneralInfo',
+                type: #COLLECTION,
+                position: 10
+                },
+                     { id:            'Invoicedet',
+                    purpose:       #STANDARD,
+                    type:          #IDENTIFICATION_REFERENCE,
+                    label:         'Invoice Details',
+                    parentId: 'GeneralInfo',
+                    position:      10 },
+                  {
+                      id: 'Upload',
+                      purpose: #STANDARD,
+                      type: #FIELDGROUP_REFERENCE,
+                      parentId: 'GeneralInfo',
+                      label: 'Upload Invoice',
+                      position: 20,
+                      targetQualifier: 'Upload'
+                  } ]
+
+@UI.hidden: true
+    AttUuid;
+      @UI.hidden: true
+    ConUuid;
+          @UI:{
+  lineItem: [{ position: 30 , label: 'Attachment' }],
+  fieldGroup: [{position: 30  , qualifier: 'Upload' , label: 'Attachment' } ] }
+
+    Attachment;
+  @UI.hidden: true
+    Mimetype;
+  @UI.hidden: true
+    Filename;
+ 
+//     @UI.hidden: true
+          @UI:{
+  lineItem: [{ position: 100 }],
+  identification: [{ position: 100 } ] }
+    CreatedBy;
+     @UI.hidden: true
+    CreatedAt;
+     @UI.hidden: true
+    LastChangedBy;
+     @UI.hidden: true
+    LastChangedAt;
+     @UI.hidden: true
+    LoclLastChangedAt;
+
+}

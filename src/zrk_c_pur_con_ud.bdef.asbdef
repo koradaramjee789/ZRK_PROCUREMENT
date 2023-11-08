@@ -1,0 +1,69 @@
+projection;
+strict;
+use draft;
+use side effects;
+
+
+define behavior for ZRK_C_PUR_CON_UD alias PurCon
+{
+
+
+  use create;
+  use update;
+  use delete;
+
+  use association _PurConItem { create; with draft; }
+  use association Attachments { create; with draft; }
+
+  use action Forward;
+  use action refresh_doc;
+  use action Send_For_Approval;
+  use action Renewal_doc;
+  use action Partial_PR_To_PC;
+
+  use function getDetails;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+  use action Resume;
+
+}
+
+
+define behavior for ZRK_C_PUR_CON_I alias PurConItem
+{
+
+  use update;
+  use delete;
+
+  use association _PurCon { with draft; }
+
+  use association _PurConItemCond { create; with draft; }
+}
+
+
+define behavior for ZRK_C_PUR_COND_I alias PurConItemCond
+
+{
+
+  use update;
+  use delete;
+
+
+  use association _PurConItem { with draft; }
+
+  use association _PurCon { with draft; }
+
+}
+
+define behavior for ZRK_C_PUR_CON_ATT alias Attachments
+{
+
+  use update;
+  use delete;
+
+  use association _PurCon { with draft; }
+
+}

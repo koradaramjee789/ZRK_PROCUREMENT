@@ -1,0 +1,58 @@
+@Metadata.layer: #CORE
+@UI: {
+headerInfo: {
+    typeName: 'Purchase Contract Item conditions',
+    typeNamePlural: 'Conditions',
+    title.value: 'CondType',
+    description.value: 'CondType'
+}
+}
+annotate entity ZRK_C_PUR_COND_I with
+{
+
+  @UI.facet: [{   id: 'Conditions' ,
+                  label: 'Conditions' ,
+                  purpose: #STANDARD ,
+                  position: 10 ,
+                  type: #IDENTIFICATION_REFERENCE}]
+  @UI.hidden: true
+  CondUuid;
+  @UI.hidden: true
+  ConUuid;
+  @UI.hidden: true
+  ConItemUuid;
+  @UI:{
+  lineItem: [{ position: 10 }],
+  identification: [{ position: 10 }]
+  }
+  CondType;
+  @UI:{
+  lineItem: [{ position: 20 }],
+  identification: [{ position: 20 }]
+  }
+  ValidFrom;
+  @UI:{
+  lineItem: [{ position: 30 }],
+  identification: [{ position: 30 }]
+  }
+  ValidTo;
+  @UI:{
+  lineItem: [{ position: 40 }],
+  identification: [{ position: 40 }]
+  }
+
+  Price;
+//  @Consumption.valueHelpDefinition: [{
+//  entity: {
+//      name: 'I_Currency',
+//      element: 'Currency'
+//  },
+//  useForValidation: true,
+//  label: 'Select currency from Dailog'
+//  }]
+
+  @UI: { lineItem: [{ hidden: true , exclude: true }],
+         identification: [ { hidden: true } ] }
+  Currency;
+
+}

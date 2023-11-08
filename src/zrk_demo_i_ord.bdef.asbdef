@@ -1,0 +1,49 @@
+managed implementation in class ZRK_DEMO_BP_ORD unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZRK_DEMO_I_ORD alias Ord
+persistent table zrk_demo_ord
+draft table zrk_demo_ord_d
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+
+{
+  field ( readonly )
+   OrdUUID,
+   CreatedAt,
+   CreatedBy,
+   LastChangedAt,
+   LocalLastChangedAt,
+   LastChangedBy;
+
+  field ( numbering : managed )
+   OrdUUID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZRK_DEMO_ORD
+  {
+    OrdUUID = ord_uuid;
+    ObjectID = object_id;
+    Description = description;
+    Buyer = buyer;
+    Supplier = supplier;
+    StatCode = stat_code;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

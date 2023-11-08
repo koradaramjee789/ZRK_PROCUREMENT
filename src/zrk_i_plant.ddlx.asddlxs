@@ -1,0 +1,9 @@
+@Metadata.layer: #CORE
+annotate view ZRK_I_PLANT
+    with 
+{
+
+    @UI.hidden: true
+    PlantNo;
+    
+}

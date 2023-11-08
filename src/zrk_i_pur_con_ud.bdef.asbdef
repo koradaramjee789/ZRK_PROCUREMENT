@@ -1,0 +1,145 @@
+unmanaged implementation in class zbp_rk_i_pur_con_ud unique;
+strict;
+with draft;
+
+define behavior for ZRK_I_PUR_CON_UD alias PurCon
+draft table zrk_dt_pur_con_u
+lock master
+total etag LoclLastChangedAt
+authorization master ( instance, global )
+etag master LoclLastChangedAt
+{
+
+  field ( numbering : managed, readonly ) ConUuid;
+  field ( readonly ) ObjectId, CreatedBy, SendVia, StatCode, VersionNo, DraftFlag;
+
+  field ( features : instance ) BuyerDisp, Buyer, Supplier;
+
+  create ( features : global );
+  update ( features : instance, precheck );
+  delete ( features : instance );
+
+  association _PurConItem { create; with draft; }
+  association Attachments { create; with draft; }
+
+  // instance function
+  function getDetails result [0..*] $self;
+
+  determination set_output_med on modify { field SupConId; field Supplier; }
+  determination set_pc_num on modify { create; }
+
+  determination SetUrgentFlag on modify { field urgent_flag ; }
+
+  //static
+  action ( features : instance ) Forward parameter ZRK_I_FWD_BUYER result [1] entity ZRK_I_PUR_CON_UD;
+  action refresh_doc result [1] $self;
+  action ( features : instance ) Send_For_Approval external 'SendForApproval' result [1] $self;
+  action ( authorization : instance ) Renewal_doc parameter ZRK_A_RENEW_DOC result [1] $self;
+
+  action Partial_PR_To_PC deep parameter ZRK_A_PartialPrToPCHead;
+
+  draft action Resume with additional implementation;
+  draft action Activate with additional implementation;
+  draft action Edit with additional implementation;
+  draft action Discard;
+  draft determine action Prepare;
+  mapping for zrk_i_fwd_buyer control zrk_s_fwd_buyer_intx
+    {
+      Buyer   = ToBeBuyer;
+    }
+
+  side effects
+  {
+    field SupConId affects field SendVia, field sent_via_text;
+    field Supplier affects field SendVia, field sent_via_text;
+    field urgent_flag affects field AdhocUrgent  , field urgent_comments ;
+  }
+
+}
+
+define behavior for ZRK_I_PUR_CON_I alias PurConItem
+draft table zrk_dt_pur_con_i
+lock dependent by _PurCon
+authorization dependent by _PurCon
+etag master LoclLastChangedAt
+
+{
+
+  field ( numbering : managed, readonly ) ConItemUuid;
+
+  create;
+  update;
+  delete;
+
+  determination set_item_no on modify { create; }
+
+  determination On_Item_change on modify { field Currency; }
+
+
+  association _PurCon { with draft; }
+
+  association _PurConItemCond { create; with draft; }
+
+  field ( readonly ) ConUuid, ItemNo, SrcReqItem, SrcReqNo, SrcOrdNo, SrcOrdItem;
+
+  side effects { field Currency affects entity _PurConItemCond ; }
+
+}
+
+
+define behavior for ZRK_I_PUR_COND_I alias PurConItemCond
+draft table zrk_dt_pur_cnd_i
+lock dependent by _PurCon
+authorization dependent by _PurCon
+etag master LoclLastChangedAt
+
+{
+
+  field ( numbering : managed, readonly ) CondUuid;
+  //field ( mandatory : create ) CondType , Currency , ValidFrom , ValidTo ;
+  field ( features : instance ) Currency;
+
+  update;
+  delete;
+
+  determination set_default_for_cond on modify { create; }
+
+  association _PurCon { with draft; }
+  association _PurConItem { with draft; }
+  field ( readonly ) ConUuid, ConItemUuid;
+  mapping for zrk_t_pur_cond_i control zrk_s_pur_con_itm_cnd_intx
+    {
+      CondUuid          = cond_uuid;
+      ConUuid           = con_uuid;
+      ConItemUuid       = con_item_uuid;
+      CondType          = cond_type;
+      ValidFrom         = valid_from;
+      ValidTo           = valid_to;
+      price             = price;
+      currency          = currency;
+      CreatedBy         = created_by;
+      CreatedAt         = created_at;
+      LastChangedBy     = last_changed_by;
+      LastChangedAt     = last_changed_at;
+      LoclLastChangedAt = locl_last_changed_at;
+    }
+
+
+
+
+
+}
+
+
+define behavior for zrk_i_pur_con_att alias PurConAtt
+draft table zrk_d_pur_cnd_at
+lock dependent by _PurCon
+authorization dependent by _PurCon
+etag master LoclLastChangedAt
+{
+  field ( numbering : managed, readonly ) AttUuid;
+  association _PurCon { with draft; }
+  field ( readonly ) ConUuid, CreatedBy;
+  update;
+  delete;
+}

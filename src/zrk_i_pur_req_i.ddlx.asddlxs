@@ -1,0 +1,134 @@
+@Metadata.layer: #CORE
+
+@UI: {
+headerInfo: {
+    typeName: 'Purchase Requisition Item',
+    typeNamePlural: 'Items',
+    title.value: 'Description',
+    description.value: 'Description'
+}
+}
+annotate entity ZRK_I_PUR_REQ_I with
+{
+
+
+  @UI.facet: [{   id: 'General' ,
+                  label: 'General' ,
+                  purpose: #STANDARD ,
+                  position: 10 ,
+                  type: #IDENTIFICATION_REFERENCE}]
+
+
+  @UI.hidden: true
+  ObjectId;
+  @UI.lineItem: [{position: 10 } , 
+    { type: #FOR_ACTION, dataAction: 'assignSupplier', label: 'Assign Supplier' } 
+    ]
+  
+  @UI.identification: [{position: 10 }]
+  ItemNo;
+  @UI.lineItem: [{position: 20 }]
+  @UI.identification: [{position: 30 }]
+  Description;
+  @UI.lineItem: [{position: 30 }]
+  @UI.identification: [{position: 30 }]
+  @Consumption.valueHelpDefinition: [{
+      qualifier: '',
+      entity: {
+          name: 'ZRK_I_PARTS',
+          element: 'PartNo'
+      },
+            distinctValues: true,
+      useForValidation: true,
+      enabled: '',
+      additionalBinding: [{
+          localParameter: '',
+          localElement: 'CommCode',
+          localConstant: '',
+          parameter: '',
+          element: 'CategoryId',
+          usage: #FILTER_AND_RESULT
+      },
+      {
+          localParameter: '',
+          localElement: 'Unit',
+          localConstant: '',
+          parameter: '',
+          element: 'Unit',
+          usage: #FILTER_AND_RESULT
+      },
+      {
+          localParameter: '',
+          localElement: 'Description',
+          localConstant: '',
+          parameter: '',
+          element: 'Description',
+          usage: #FILTER_AND_RESULT
+      }],
+      label: '',
+      presentationVariantQualifier: ''
+      
+  }]
+  PartNo;
+  @UI.lineItem: [{position: 35 }]
+  @UI.identification: [{position: 35  }]
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_UnitOfMeasure',
+          element: 'UnitOfMeasure'
+      },
+      useForValidation: true,
+      label: 'Select currency from Dailog'
+  }]  
+  Unit;
+  @UI.lineItem: [{position: 40 }]
+  @UI.identification: [{position: 40 }]
+    @Consumption.valueHelpDefinition: [{ entity: {
+        name: 'zrk_i_categories',
+        element: 'CategoryId'
+    } }]  
+  CommCode;
+  @UI.lineItem: [{position: 50 }]
+  @UI.identification: [{position: 50 }]
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_PLANT',
+      element: 'PlantNo'
+  } }]
+  Plant;
+  @UI.lineItem: [{position: 60 }]
+  @UI.identification: [{position: 60 }]
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUPPLIER',
+      element: 'SupNo'
+  } ,
+        useForValidation: true
+  }]
+  Supplier;
+  @UI.lineItem: [{position: 70 }]
+  @UI.identification: [{position: 70 }]
+  Quantity;
+  @UI.lineItem: [{position: 80 }]
+  @UI.identification: [{position: 80  }]
+  Price;
+    //@UI.hidden: true
+//  @UI.lineItem: [{position: 90 }]
+//  @UI.identification: [{position: 90  }]
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_Currency',
+          element: 'Currency'
+      },
+      useForValidation: true,
+      label: 'Select currency from Dailog'
+  }]
+  Currency;
+  @UI.hidden: true
+  CreatedBy;
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+
+}

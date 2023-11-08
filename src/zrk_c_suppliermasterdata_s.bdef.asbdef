@@ -1,0 +1,27 @@
+projection;
+strict;
+use draft;
+
+define behavior for ZRK_C_SupplierMasterData_S alias SupplierMasterDaAll
+
+{
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action SelectCustomizingTransptReq;
+
+  use association _SupplierMasterData { create; with draft; }
+}
+
+define behavior for ZRK_C_SupplierMasterData alias SupplierMasterData
+
+{
+  use update;
+  use delete;
+
+  use action CopySupplierMasterData;
+
+  use association _SupplierMasterDaAll { with draft; }
+}

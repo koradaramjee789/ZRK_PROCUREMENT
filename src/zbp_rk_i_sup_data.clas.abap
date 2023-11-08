@@ -1,0 +1,9 @@
+CLASS zbp_rk_i_sup_data DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zrk_i_sup_data.
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZBP_RK_I_SUP_DATA IMPLEMENTATION.
+ENDCLASS.

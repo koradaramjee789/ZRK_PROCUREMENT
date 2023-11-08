@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZRK_DEMO_C_ORD'
+define service ZRK_DEMO_UI_ORD {
+  expose ZRK_DEMO_C_ORD as Ord;
+}

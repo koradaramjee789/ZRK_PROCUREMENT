@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZRK_C_APR_DET'
+define service ZRK_UI_APR_DET {
+  expose ZRK_C_APR_DET as Approval;
+}

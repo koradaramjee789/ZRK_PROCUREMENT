@@ -1,0 +1,76 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_C_SAL_ORD_I
+    with 
+{
+   @UI:{ facet: [{
+       id: 'id1',
+       purpose: #STANDARD,
+       parentId: '',
+       position: 10,
+       label: 'General',
+       type: #IDENTIFICATION_REFERENCE
+   }] }
+   
+    @UI:{ 
+        lineItem: [{ position:  10 }] ,
+        identification: [{ position: 10 }]
+    }   
+    ItemNo;
+    @UI:{ 
+        lineItem: [{ position:  20 }] ,
+        identification: [{ position: 20 }]
+    }    
+    Description;
+    @UI:{ 
+        lineItem: [{ position:  30 }] ,
+        identification: [{ position: 30 }]
+    }    
+    PartNo;
+//    @UI:{ 
+//        lineItem: [{ position:  40 }] ,
+//        identification: [{ position: 40 }]
+//    }    
+//    Unit;
+        @UI:{ 
+        lineItem: [{ position:  50 }] ,
+        identification: [{ position: 50 }]
+    }
+    CommCode;
+        @UI:{ 
+        lineItem: [{ position:  60 }] ,
+        identification: [{ position: 60 }]
+    }
+    Plant;
+        @UI:{ 
+        lineItem: [{ position:  70 }] ,
+        identification: [{ position: 70 }]
+    }
+    Supplier;
+        @UI:{ 
+        lineItem: [{ position:  80 }] ,
+        identification: [{ position: 80 }]
+    }
+    Quantity;
+        @UI:{ 
+        lineItem: [{ position:  90 }] ,
+        identification: [{ position: 90 }]
+    }
+    Price;
+        @UI:{ 
+        lineItem: [{ position:  100 }] ,
+        identification: [{ position: 100 }]
+    }
+//    Currency;
+//        @UI:{ 
+//        lineItem: [{ position:  110 }] ,
+//        identification: [{ position: 110 }]
+//    }
+    LastChangedBy;
+        @UI:{ 
+        lineItem: [{ position:  120 }] ,
+        identification: [{ position: 120 }]
+    }
+    LastChangedAt;
+
+    
+}

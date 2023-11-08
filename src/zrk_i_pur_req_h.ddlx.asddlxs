@@ -1,0 +1,74 @@
+@Metadata.layer: #CORE
+
+@UI: {
+headerInfo: {
+    typeName: 'Purchase Requisition',
+    typeNamePlural: 'Purchase Requisitions',
+    title: {
+    type: #STANDARD,
+    label: 'PR',
+    value: 'ObjectId'
+}
+}
+}
+annotate view ZRK_I_PUR_REQ_H with
+{
+
+  @UI.facet: [{ id: 'Header' ,
+                purpose: #STANDARD ,
+                type:            #IDENTIFICATION_REFERENCE,
+                position:        10  ,
+                label: 'Header'
+              },
+              { id: 'Items' ,
+                purpose: #STANDARD ,
+                type:            #LINEITEM_REFERENCE,
+                position:        20  ,
+                label: 'Items',
+                targetElement: '_PRItem'
+              }              
+              ]
+
+  @UI.lineItem: [{position: 10 },
+   { type: #FOR_ACTION, dataAction: 'copyRequisition', label: 'Copy Requisition' } ,
+   { type: #FOR_ACTION, dataAction: 'CompletePR', label: 'Complete PR' } ,
+   { type: #FOR_ACTION, dataAction: 'Convert_Into_PC', label: 'Convert into PC' }
+    ]
+  @UI.identification: [{ position: 10 },
+   { type: #FOR_ACTION, dataAction: 'copyRequisition', label: 'Copy Requisition' } ,
+   { type: #FOR_ACTION, dataAction: 'CompletePR', label: 'Complete PR' } ,
+   { type: #FOR_ACTION, dataAction: 'Convert_Into_PC', label: 'Convert into PC' }
+  ]
+  @UI.selectionField: [ { position: 10 } ]
+  ObjectId;
+  @UI.lineItem: [{position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @UI.selectionField: [ { position: 20 } ]
+  Description;
+  @UI.lineItem: [{position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @UI.selectionField: [ { position: 30 } ]
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZRK_I_BUYER',
+          element: 'BuyerId'
+      }
+   }]
+  Buyer;
+  @UI.lineItem: [{position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @UI.selectionField: [ { position: 40 } ]
+  StatCode;
+  @UI.hidden: true
+  CreatedBy;
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+  /* Associations */
+
+  // _PRItem;
+
+}

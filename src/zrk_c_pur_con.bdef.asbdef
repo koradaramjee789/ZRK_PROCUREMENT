@@ -1,0 +1,13 @@
+projection;
+strict;
+
+define behavior for ZRK_C_PUR_CON alias PurCon
+{
+  use create;
+  use update;
+  use delete;
+
+  field( readonly ) ObjectId, CreatedBy ;
+
+  use function DefaultForCreate;
+}

@@ -1,0 +1,30 @@
+@Metadata.layer: #CORE
+@UI.presentationVariant: [{
+    qualifier: '',
+    id: '',
+    text: '',
+    maxItems: 20,
+    sortOrder: [{
+        by: 'SupNo',
+        direction: #ASC
+    }]
+//    groupBy: [''],
+//    totalBy: [''],
+//    total: ['']
+////    includeGrandTotal: true,
+//    initialExpansionLevel: ,
+//    requestAtLeast: [''],
+//    visualizations: [{
+//        type: ,
+//        qualifier: '',
+//        element: ''
+//    }],
+//    selectionFieldsQualifier: ''
+}]
+annotate view ZRK_I_SUPPLIER
+    with 
+{
+//    SupNo;
+//    Name;
+    
+}

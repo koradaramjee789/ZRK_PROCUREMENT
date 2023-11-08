@@ -1,0 +1,26 @@
+managed implementation in class zbp_rk_i_sup_data unique;
+//strict ( 2 );
+
+define behavior for ZRK_I_SUP_DATA //alias <alias_name>
+persistent table ZRK_MD_SUPPLIER
+lock master
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+
+
+  create;
+  update;
+  delete;
+
+
+  mapping for zrk_md_supplier corresponding {
+    SupNo = sup_no;
+    Name = name;
+    LocalLastChangedAt = local_last_changed_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LastChangedAt = last_changed_at;
+
+  }
+
+}

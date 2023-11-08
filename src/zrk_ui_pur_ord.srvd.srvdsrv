@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZRK_C_PUR_ORD_H'
+define service ZRK_UI_PUR_ORD {
+  expose ZRK_C_PUR_ORD_H as POHead;
+}

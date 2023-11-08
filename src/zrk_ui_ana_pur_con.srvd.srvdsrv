@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD for analytical purchase contracts'
+define service ZRK_UI_ANA_PUR_CON {
+  expose zrk_c_ana_pur_con as PurCon;
+  expose ZRK_I_SUPPLIER as Supplier;
+}

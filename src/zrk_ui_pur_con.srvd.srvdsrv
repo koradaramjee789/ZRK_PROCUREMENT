@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition forZRK_C_PUR_CON_H'
+define service ZRK_UI_PUR_CON {
+  expose ZRK_C_PUR_CON_H as PCHead;
+}

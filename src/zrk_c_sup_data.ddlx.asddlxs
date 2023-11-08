@@ -1,0 +1,24 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_C_SUP_DATA with
+{
+
+
+  @UI.facet: [{
+      id: '',
+      purpose: #STANDARD,
+      position: 10,
+      label: 'General',
+      type: #IDENTIFICATION_REFERENCE
+  }]
+
+
+        
+  @UI:{ lineItem: [{position: 10 , label: 'Supplier No.'} , {type: #FOR_ACTION , dataAction: 'Create' , label: 'Create1'}]
+        ,identification: [{position: 10 , label: 'Supplier No.' } , {type: #FOR_ACTION , dataAction: 'Create' , label: 'Create1'}]}
+  SupNo;
+  @UI:{ lineItem: [{position: 20 , label: 'Supplier Name'}]
+    ,identification: [{position: 20 , label: 'Supplier Name' }]}
+  Name;
+
+
+}

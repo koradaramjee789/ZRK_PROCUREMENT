@@ -1,0 +1,15 @@
+@Metadata.layer: #CORE
+@Consumption.valueHelpDefinition: [{ entity: {
+    name: 'ZRK_I_SUPPLIER'
+} }]
+annotate entity zrk_a_supplier
+    with 
+{
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUPPLIER',
+      element: 'SupNo'
+  } } ]
+  @UI.identification: [{position: 10}]
+   ToBesupplier;
+    
+}

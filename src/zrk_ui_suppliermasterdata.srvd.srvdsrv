@@ -1,0 +1,4 @@
+define service ZRK_UI_SUPPLIERMASTERDATA {
+  expose ZRK_C_SUPPLIERMASTERDATA_S as SupplierMasterDaAll;
+  expose ZRK_C_SUPPLIERMASTERDATA as SupplierMasterData;
+}

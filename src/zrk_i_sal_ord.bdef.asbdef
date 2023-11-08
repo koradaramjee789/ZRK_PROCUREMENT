@@ -1,0 +1,30 @@
+unmanaged implementation in class zrk_bp_i_sal_ord unique;
+strict ( 2 );
+
+define behavior for ZRK_I_SAL_ORD alias Header
+late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Items { create; }
+
+  field ( readonly  )  ObjectId , StatCode ;
+
+  static factory action CreateHeaderInPopup  [1] ;
+}
+
+define behavior for ZRK_I_SAL_ORD_I alias Items
+late numbering
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) ObjectId;
+  association _Header;
+}

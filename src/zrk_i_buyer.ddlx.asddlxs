@@ -1,0 +1,22 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_I_BUYER
+    with 
+{
+
+    @UI.facet: [{
+        id: 'id1',
+        purpose: #QUICK_VIEW,
+        label: 'Buyer - Quickview',
+        type: #FIELDGROUP_REFERENCE
+    }]
+
+    @UI.identification: [{ position: 10 , label: 'ID' }]
+    
+    BuyerId;
+    @UI.identification: [{ position: 20 , label: 'Name' }]
+    
+    Name;
+    @UI.identification: [{ position: 30 , label: 'Email-Id' }]
+    EmailId;
+    
+}

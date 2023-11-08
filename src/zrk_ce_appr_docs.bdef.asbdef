@@ -1,0 +1,15 @@
+unmanaged implementation in class zrk_bp_ce_appr_docs unique;
+strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZRK_CE_APPR_DOCS alias ApprDoc
+//late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+
+field ( readonly : update ) DocType , ObjectId ;
+  create;
+  update;
+  delete;
+}

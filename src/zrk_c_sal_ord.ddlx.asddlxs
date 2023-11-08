@@ -1,0 +1,57 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_C_SAL_ORD
+    with 
+{
+
+   @UI:{ facet: [{
+       id: 'id1',
+       purpose: #STANDARD,
+       parentId: '',
+       position: 10,
+       label: 'General',
+       type: #IDENTIFICATION_REFERENCE
+   },
+         {  id: 'id2',
+       purpose: #STANDARD,
+       parentId: '',
+       position: 20,
+       label: 'Items',
+       targetElement: '_Items' ,
+       type: #LINEITEM_REFERENCE }
+   
+   ] }
+
+    @UI:{ 
+        lineItem: [{ position:  10 }] ,
+        identification: [{ position: 10 }]
+    }
+    ObjectId;
+    @UI:{ 
+        lineItem: [{ position:  20 }] ,
+        identification: [{ position: 20 }]
+    }    
+    Description;
+    @UI:{ 
+        lineItem: [{ position:  30 }] ,
+        identification: [{ position: 30 }]
+    }    
+    Buyer;
+    @UI:{ 
+        lineItem: [{ position:  40 }] ,
+        identification: [{ position: 40 }]
+    }    
+    StatCode;
+    @UI:{ 
+        lineItem: [{ position:  50 }] ,
+        identification: [{ position: 50 }]
+    }    
+    LastChangedBy;
+        @UI:{ 
+        lineItem: [{ position:  60 }] ,
+        identification: [{ position: 60 }]
+    }
+    LastChangedAt;
+
+
+    
+}

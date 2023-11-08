@@ -1,0 +1,9 @@
+CLASS zrk_bp_i_sal_ord DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zrk_i_sal_ord.
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZRK_BP_I_SAL_ORD IMPLEMENTATION.
+ENDCLASS.

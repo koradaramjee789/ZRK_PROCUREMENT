@@ -1,0 +1,72 @@
+managed with additional save implementation in class ZRK_BP_I_SUPPLIERMASTERDATA_S unique;
+strict;
+with draft;
+
+define behavior for ZRK_I_SupplierMasterData_S alias SupplierMasterDaAll
+draft table ZRK_MD_SUPPL_D_S
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master( global )
+
+{
+  field ( readonly )
+   SingletonID;
+
+
+  update;
+  internal create;
+  internal delete;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _SupplierMasterData { create ( features : instance ); with draft; }
+}
+
+define behavior for ZRK_I_SupplierMasterData alias SupplierMasterData
+persistent table ZRK_MD_SUPPLIER
+draft table ZRK_MD_SUPPLIE_D
+etag master LocalLastChangedAt
+lock dependent by _SupplierMasterDaAll
+authorization dependent by _SupplierMasterDaAll
+
+{
+  field ( mandatory : create )
+   SupNo;
+
+  field ( readonly )
+   SingletonID,
+   LocalCreatedBy,
+   LocalCreatedAt,
+   LocalLastChangedBy,
+   LocalLastChangedAt,
+   LastChangedAt;
+
+  field ( readonly : update )
+   SupNo;
+
+
+  update( features : global );
+  delete( features : global );
+
+  factory action ( features : instance ) CopySupplierMasterData parameter ZD_CopySupplierMasterDataP [1];
+
+  mapping for ZRK_MD_SUPPLIER
+  {
+    SupNo = SUP_NO;
+    Name = NAME;
+    LocalCreatedBy = LOCAL_CREATED_BY;
+    LocalCreatedAt = LOCAL_CREATED_AT;
+    LocalLastChangedBy = LOCAL_LAST_CHANGED_BY;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    LastChangedAt = LAST_CHANGED_AT;
+  }
+
+  association _SupplierMasterDaAll { with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}

@@ -1,0 +1,13 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_I_FWD_BUYER with
+{
+
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZRK_I_BUYER',
+          element: 'BuyerId'
+      }
+   }]
+  ToBeBuyer;
+
+}

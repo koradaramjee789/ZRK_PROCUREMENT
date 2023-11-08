@@ -1,0 +1,26 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_A_RENEW_DOC with
+{
+
+  @Consumption.valueHelpDefinition: [{ entity: {
+    name: 'ZRK_I_COMP_CODE',
+    element: 'CompCode'
+  }
+  }]
+  @UI.identification: [{position: 10 }]
+  @UI.defaultValue : #( 'ELEMENT_OF_REFERENCED_ENTITY: CompCode')
+  CompCode;
+  @UI.identification: [{position: 20 }]
+  @Consumption.valueHelpDefinition: [{
+            entity       : {
+              name       : 'ZRK_CE_Renewal_Codes',
+              element    : 'renewal_code'
+            },
+            useForValidation: true,
+            label        : 'Select currency from Dailog',
+            additionalBinding: [ { localElement: 'CompCode',
+                                  element      : 'CompCode',
+                                  usage: #FILTER_AND_RESULT }
+              ]  } ]
+  renewal_code;
+}

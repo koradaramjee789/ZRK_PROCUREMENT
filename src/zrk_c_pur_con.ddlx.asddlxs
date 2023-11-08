@@ -1,0 +1,123 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Purchase Contract',
+    typeNamePlural: 'Purchase Contracts',
+    description: {
+    type: #STANDARD,
+    value: 'Description'
+        },
+        title: {
+//    type: #STANDARD,
+    value: 'ObjectId'
+        }
+        
+    }
+}
+annotate entity ZRK_C_PUR_CON with
+{
+  @UI.facet: [ {
+          id: 'Header',
+          type: #HEADERINFO_REFERENCE,
+          label: 'Header',
+          purpose: #HEADER,
+          position: 10,
+          targetQualifier: 'Header'
+  },
+  {     id: 'General',
+        type: #IDENTIFICATION_REFERENCE,
+        purpose: #STANDARD,
+        label: 'General',
+        position: 20 ,
+        targetQualifier: 'General'},
+
+  {     id: 'Validities',
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Validities',
+        position: 30 ,
+        targetQualifier: 'Validities'}
+
+   ]
+
+  @UI.hidden: true
+  ConUuid;
+
+  @UI:{ lineItem: [{ position: 10 }] , identification: [{ position: 10 , qualifier: 'Header'}]}
+  ObjectId;
+  
+  @UI:{ lineItem: [{ position: 20 }] , identification: [{ position: 20 , qualifier: 'Header'}]}
+  Description;
+  
+  @UI:{ lineItem: [{ position: 30 }] , identification: [{ position: 30 , qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ 
+      entity: {
+          name: 'ZRK_I_BUYER',
+          element: 'BuyerId'
+      }
+   }]  
+  Buyer;
+  
+  @UI:{ lineItem: [{ position: 40 }] , identification: [{ position: 40 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUPPLIER',
+      element: 'SupNo'
+  } ,
+        useForValidation: true
+  }]  
+  Supplier;
+  
+  @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 50 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_SUP_CON',
+      element: 'SupConId'
+  } ,
+  additionalBinding: [{
+      localElement: 'Supplier',
+      localConstant: '',
+      element: 'SupNo',
+      usage: #FILTER_AND_RESULT 
+  }] , 
+        useForValidation: true
+  }]   
+  SupConId;
+  
+  @UI:{ lineItem: [{ position: 50 }] , identification: [{ position: 55 ,qualifier: 'General'}]}
+  @Consumption.valueHelpDefinition: [{ entity: {
+      name: 'ZRK_I_COMP_CODE',
+      element: 'CompCode'
+  } ,
+        useForValidation: true
+  }]   
+  CompCode;  
+  
+  @UI:{ lineItem: [{ position: 60 }] , identification: [{ position: 60 ,qualifier: 'Header'}]}
+  StatCode;
+  
+  @UI:{ lineItem: [{ position: 70 }] , identification: [{ position: 70 , qualifier: 'Validities' }]}
+  ValidFrom;
+  
+  @UI:{ lineItem: [{ position: 80 }] , identification: [{ position: 80 , qualifier: 'Validities' }]}
+  ValidTo;
+  
+  @UI:{ lineItem: [{ position: 80 }] , identification: [{ position: 90 , qualifier: 'Validities' }]}
+  @Consumption.valueHelpDefinition: [{ 
+      entity: {
+          name: 'ZRK_I_FISCAL_YEAR',
+          element: 'fiscal_year'
+      }
+   }]   
+  FiscalYear;
+  
+  @UI:{ lineItem: [{ position: 90 }] , identification: [{ position: 100, qualifier: 'General' , label: 'Created By' }]}
+  CreatedBy;
+  
+  @UI.hidden: true
+  CreatedAt;
+  @UI.hidden: true
+  LastChangedBy;
+  @UI.hidden: true
+  LastChangedAt;
+  @UI.hidden: true
+  LoclLastChangedAt;
+
+}

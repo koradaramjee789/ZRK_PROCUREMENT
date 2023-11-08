@@ -1,0 +1,5 @@
+@EndUserText.label: 'Manage Suppliers'
+define service ZRK_UI_SUP_DATA {
+  expose ZRK_C_SUP_DATA as Supplier;
+  expose ZRK_C_SUP_CON_DATA as SuppCon;
+}
