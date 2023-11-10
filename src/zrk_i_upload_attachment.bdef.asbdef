@@ -1,0 +1,10 @@
+abstract;
+strict ( 2 );
+
+define behavior for zrk_i_upload_attachment //alias <alias_name>
+{
+}
+
+//define behavior for zrk_i_upload_attach_file //alias <alias_name>
+//{
+//}

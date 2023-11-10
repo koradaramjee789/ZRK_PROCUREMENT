@@ -38,8 +38,10 @@ etag master LoclLastChangedAt
 
   action Partial_PR_To_PC deep parameter ZRK_A_PartialPrToPCHead;
 
+  action ( precheck ) UploadExcel parameter zrk_i_upload_attachment result [1] $self;
+
   draft action Resume with additional implementation;
-  draft action Activate with additional implementation;
+  draft action Activate with additional implementation optimized;
   draft action Edit with additional implementation;
   draft action Discard;
   draft determine action Prepare;

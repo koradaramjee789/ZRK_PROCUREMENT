@@ -444,6 +444,11 @@ CLASS lhc_PurCon DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS SetUrgentFlag FOR DETERMINE ON MODIFY
       IMPORTING keys FOR PurCon~SetUrgentFlag.
+    METHODS UploadExcel FOR MODIFY
+      IMPORTING keys FOR ACTION PurCon~UploadExcel RESULT result.
+
+    METHODS precheck_UploadExcel FOR PRECHECK
+      IMPORTING keys FOR ACTION PurCon~UploadExcel.
 
 ENDCLASS.
 
@@ -1186,6 +1191,34 @@ CLASS lhc_PurCon IMPLEMENTATION.
     " FAILED failed
     " MAPPED mapped.
   ENDMETHOD.
+  METHOD UploadExcel.
+
+    IF 1 = 2.
+
+    ENDIF.
+  ENDMETHOD.
+
+  METHOD precheck_UploadExcel.
+
+
+    READ ENTITIES OF zrk_i_pur_con_ud IN LOCAL MODE
+     ENTITY PurCon
+     FIELDS ( urgent_flag )
+     WITH CORRESPONDING #( keys )
+     RESULT DATA(lt_con).
+
+    LOOP AT lt_con ASSIGNING FIELD-SYMBOL(<fs_con>).
+
+      APPEND VALUE #( %tky = <fs_con>-%tky ) TO failed-purcon.
+      APPEND VALUE #( %tky              = <fs_con>-%tky
+                      %msg              = NEW zrk_cx_msg( severity = if_abap_behv_message=>severity-error
+                                                          textid   = zrk_cx_msg=>c_fwd_buyer
+                                                          buyer    = 'abcd' ) )
+             TO reported-purcon.
+
+    ENDLOOP.
+  ENDMETHOD.
+
 ENDCLASS.
 
 

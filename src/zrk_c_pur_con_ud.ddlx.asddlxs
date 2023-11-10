@@ -93,6 +93,9 @@
   },
   {
    type: #FOR_ACTION, dataAction: 'Partial_PR_To_PC' , label: 'Append PR to PC'
+  },
+    {
+   type: #FOR_ACTION, dataAction: 'UploadExcel' , label: 'Upload Excel'
   }
   ]
   @UI.identification: [{

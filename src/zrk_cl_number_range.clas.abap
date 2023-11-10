@@ -51,7 +51,7 @@ try.
   cl_numberrange_intervals=>create(
     EXPORTING
       interval  = nr_interval
-      object    = 'ZRK_NR_PR'
+      object    = 'ZRK_NR_PC'
 *      subobject =
 *      option    =
 *    IMPORTING
