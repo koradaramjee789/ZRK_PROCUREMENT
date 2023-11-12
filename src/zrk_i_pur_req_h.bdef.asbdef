@@ -11,6 +11,7 @@ total etag LastChangedAt
 authorization master ( instance )
 etag master LastChangedAt
 early numbering
+
 {
   create;
   update;
@@ -19,18 +20,23 @@ early numbering
 
 
   draft action Resume with additional implementation;
-  draft action Activate with additional implementation;
+  draft action Activate with additional implementation optimized;
   draft action Edit with additional implementation;
   draft action Discard;
   draft determine action Prepare;
 
   field ( readonly ) ObjectId, StatCode;
 
-  determination DetOnModify on modify { create;  }
+  determination DetOnModify on modify { create; }
+
+  determination DetOnSave on save { create; update; }
 
   factory action copyRequisition parameter zrk_a_pur_req_h [1];
 
-  action ( features : instance, precheck ) Convert_Into_PC;
+  //  function GetDefaultsForConvert_Into_PC result [1] ZRK_A_ActionParam_PR_To_PC;
+  action ( features : instance, precheck ) Convert_Into_PC
+    parameter ZRK_A_ActionParam_PR_To_PC result [1] $self
+    { default function GetDefaultsForConvert_Into_PC; }
 
 
 

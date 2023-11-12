@@ -6,7 +6,6 @@
     <OBJECT>ZRK_NR_PR</OBJECT>
     <DOMLEN>ZRK_PUR_REQ_ID</DOMLEN>
     <PERCENTAGE>10.0</PERCENTAGE>
-    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
    </ATTRIBUTES>
    <TEXT>
     <LANGU>E</LANGU>
@@ -14,7 +13,6 @@
     <TXT>Number Range for PR</TXT>
     <TXTSHORT>Number Range for PR</TXTSHORT>
    </TEXT>
-   <ISOLANG>EN</ISOLANG>
   </asx:values>
  </asx:abap>
 </abapGit>

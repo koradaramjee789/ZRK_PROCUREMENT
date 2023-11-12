@@ -125,7 +125,7 @@ CLASS lhc__PRHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS copyrequisition FOR MODIFY
       IMPORTING keys FOR ACTION _prhead~copyrequisition.
     METHODS convert_into_pc FOR MODIFY
-      IMPORTING keys FOR ACTION _prhead~convert_into_pc .
+      IMPORTING keys FOR ACTION _prhead~convert_into_pc RESULT result .
     METHODS completepr FOR MODIFY
       IMPORTING keys FOR ACTION _prhead~completepr RESULT result.
     METHODS earlynumbering_cba_pritem FOR NUMBERING
@@ -146,7 +146,10 @@ CLASS lhc__PRHead DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS DetOnModify FOR DETERMINE ON MODIFY
       IMPORTING keys FOR _PRHead~DetOnModify.
-
+    METHODS DetOnSave FOR DETERMINE ON SAVE
+      IMPORTING keys FOR _PRHead~DetOnSave.
+    METHODS GetDefaultsForConvert_Into_PC FOR READ
+      IMPORTING keys FOR FUNCTION _PRHead~GetDefaultsForConvert_Into_PC RESULT result.
 
 ENDCLASS.
 
@@ -188,7 +191,7 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
     CHECK number_range_returned_quantity = lines( lt_entities_to_gen ).
 
-    DATA(max_id) = CONV ZRK_PC_NUMBER( number_range_key - number_range_returned_quantity ).
+    DATA(max_id) = CONV zrk_pc_number( number_range_key - number_range_returned_quantity ).
 
     LOOP AT lt_entities_to_gen ASSIGNING FIELD-SYMBOL(<fs_rec_gen>).
 
@@ -500,5 +503,56 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
 
 
+
+  METHOD DetOnSave.
+
+*    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+*   ENTITY _PRHead
+*   ALL FIELDS WITH CORRESPONDING #( keys )
+*   RESULT DATA(lt_head).
+*
+*    LOOP AT lt_head ASSIGNING FIELD-SYMBOL(<fs_head>).
+*      <fs_head>-StatCode = 'OPEN'.
+*    ENDLOOP.
+*
+*    MODIFY ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+*    ENTITY _PRHead
+*    UPDATE FIELDS ( StatCode )
+*    WITH VALUE #( FOR <fs_key> IN lt_head ( %tky = <fs_key>-%tky
+*                                            StatCode = 'OPEN' ) )
+*    REPORTED DATA(lt_reported)
+*    FAILED DATA(lt_failed)
+*    MAPPED DATA(lt_mapped).
+
+  ENDMETHOD.
+
+  METHOD GetDefaultsForConvert_Into_PC.
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+      ENTITY _PRHead
+      ALL FIELDS WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_pur_req).
+
+    CHECK lt_pur_req IS NOT INITIAL.
+
+    READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
+        ENTITY _PRHead BY \_PRItem
+        ALL FIELDS WITH CORRESPONDING #( keys )
+        RESULT DATA(lt_pur_req_item).
+
+    CHECK lt_pur_req_item IS NOT INITIAL.
+
+    LOOP AT lt_pur_req ASSIGNING FIELD-SYMBOL(<fs_pur_req>).
+      APPEND INITIAL LINE TO result ASSIGNING FIELD-SYMBOL(<fs_result>).
+      <fs_result>-%tky = <fs_pur_req>-%tky.
+      <fs_result>-%param-buyer = COND #( WHEN <fs_pur_req>-Buyer IS NOT INITIAL
+        THEN <fs_pur_req>-Buyer
+        ELSE sy-uname ).
+      <fs_result>-%param-Company_code = '2030'.
+      <fs_result>-%param-valid_from = '20231112'.
+      <fs_result>-%param-valid_to = '20241111'.
+    ENDLOOP.
+
+  ENDMETHOD.
 
 ENDCLASS.

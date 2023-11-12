@@ -1209,11 +1209,11 @@ CLASS lhc_PurCon IMPLEMENTATION.
 
     LOOP AT lt_con ASSIGNING FIELD-SYMBOL(<fs_con>).
 
-      APPEND VALUE #( %tky = <fs_con>-%tky ) TO failed-purcon.
       APPEND VALUE #( %tky              = <fs_con>-%tky
-                      %msg              = NEW zrk_cx_msg( severity = if_abap_behv_message=>severity-error
-                                                          textid   = zrk_cx_msg=>c_fwd_buyer
-                                                          buyer    = 'abcd' ) )
+                      %msg              = new_message_with_text(
+                                            severity = if_abap_behv_message=>severity-warning
+                                            text     = 'The document is going to expire in a month ?'
+                                          ) )
              TO reported-purcon.
 
     ENDLOOP.
