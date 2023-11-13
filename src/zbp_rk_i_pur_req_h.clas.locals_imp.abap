@@ -528,6 +528,7 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
   METHOD GetDefaultsForConvert_Into_PC.
 
+    " Read the requisition header
     READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
       ENTITY _PRHead
       ALL FIELDS WITH CORRESPONDING #( keys )
@@ -535,6 +536,7 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
     CHECK lt_pur_req IS NOT INITIAL.
 
+    " Read the requisition item
     READ ENTITIES OF zrk_i_pur_req_h IN LOCAL MODE
         ENTITY _PRHead BY \_PRItem
         ALL FIELDS WITH CORRESPONDING #( keys )
@@ -542,15 +544,38 @@ CLASS lhc__PRHead IMPLEMENTATION.
 
     CHECK lt_pur_req_item IS NOT INITIAL.
 
+
     LOOP AT lt_pur_req ASSIGNING FIELD-SYMBOL(<fs_pur_req>).
       APPEND INITIAL LINE TO result ASSIGNING FIELD-SYMBOL(<fs_result>).
+
+      " If it is create operation, then %cid needs to be used instead of %tky
       <fs_result>-%tky = <fs_pur_req>-%tky.
+
+      <fs_result>-%param-description = |Created from { <fs_pur_req>-ObjectId }|.
+
       <fs_result>-%param-buyer = COND #( WHEN <fs_pur_req>-Buyer IS NOT INITIAL
-        THEN <fs_pur_req>-Buyer
-        ELSE sy-uname ).
-      <fs_result>-%param-Company_code = '2030'.
-      <fs_result>-%param-valid_from = '20231112'.
-      <fs_result>-%param-valid_to = '20241111'.
+                                         THEN <fs_pur_req>-Buyer
+                                         ELSE sy-uname ).
+
+      " Default the company code from the user attributes in the Org structure
+      <fs_result>-%param-Company_code = zrk_cl_mng_pur_con=>determine_company_code( ).
+
+      " Calculate the validity dates
+      <fs_result>-%param-valid_from = cl_abap_context_info=>get_system_date( ).
+      <fs_result>-%param-valid_to = cl_abap_context_info=>get_system_date( ) + 365.
+
+      " Take the first supplier from the requisition item
+      LOOP AT lt_pur_req_item ASSIGNING FIELD-SYMBOL(<fs_item>)
+        WHERE Supplier IS NOT INITIAL.
+        <fs_result>-%param-supplier = <fs_item>-Supplier.
+        EXIT.
+      ENDLOOP.
+
+      " If the supplier is not assigned to any item in PR, then determine from source of supply
+      IF <fs_result>-%param-supplier IS INITIAL.
+        <fs_result>-%param-supplier =
+            zrk_cl_mng_pur_con=>determine_supplier_material( iv_material = VALUE #( lt_pur_req_item[ 1 ]-PartNo ) ).
+      ENDIF.
     ENDLOOP.
 
   ENDMETHOD.
