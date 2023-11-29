@@ -1,0 +1,62 @@
+@Metadata.layer: #CORE
+annotate entity ZRK_C_PCOverview with
+{
+
+  @UI.facet: [{
+      id: 'General',
+      purpose: #STANDARD,
+      position: 10,
+      label: 'General',
+      type: #IDENTIFICATION_REFERENCE
+  }]
+  @UI.hidden: true
+  ObjectItemNo;
+  @UI:{
+  selectionField: [{ position: 10 }],
+  lineItem: [{ position: 10 }],
+  identification: [{ position: 10 }]
+  }
+  object_id;
+  @UI:{
+  lineItem: [{ position: 20 }],
+  identification: [{ position: 20 }]
+  }
+  ItemNo;
+  @UI:{
+  lineItem: [{ position: 30 }],
+  identification: [{ position: 30 }]
+  }
+  description;
+  @UI:{
+  lineItem: [{ position: 40 }],
+  identification: [{ position: 40 }]
+  }
+  buyer;
+  @UI:{
+  lineItem: [{ position: 50 }],
+  identification: [{ position: 50 }]
+  }
+  supplier;
+  @UI:{
+  lineItem: [{ position: 60 }],
+  identification: [{ position: 60 }]
+  }
+  stat_code;
+  @UI:{
+  lineItem: [{ position: 70 }],
+  identification: [{ position: 70 }]
+  }
+  target_value;
+  @UI:{
+  lineItem: [{ position: 80 }],
+  identification: [{ position: 80 }]
+  }
+  quantity;
+  @UI:{
+  lineItem: [{ position: 90 }],
+  identification: [{ position: 90 }]
+  }
+  price;
+
+
+}
