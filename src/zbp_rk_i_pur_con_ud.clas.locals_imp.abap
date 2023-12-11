@@ -767,26 +767,26 @@ CLASS lhc_PurCon IMPLEMENTATION.
     " /.. Pass the data to UI.
     result = CORRESPONDING #( lt_buyer_updated ).
 
-    IF lt_buyer_updated IS NOT INITIAL.
-
-      zrk_cl_email_service=>send_email(
-          im_sender    = 'koradaramjee@outlook.com'
-          im_subject   = 'Document has been forwarded to you'
-          im_receipent = 'koradaramjee@gmail.com'
-          im_body      = 'Document has been forwarded to you. Please check your inbox in the Contract application!!' ).
-
-      SELECT SINGLE name FROM zrk_md_buyer WHERE buyer_id = @lv_new_buyer INTO @DATA(lv_new_buyer_name).
-      IF sy-subrc <> 0.
-        CLEAR lv_new_buyer_name.
-      ENDIF.
-      APPEND VALUE #( %tky              = <fs_temp_keys>-%tky
-                      %msg              = NEW zrk_cx_msg( severity = if_abap_behv_message=>severity-success
-                                                          textid   = zrk_cx_msg=>c_fwd_buyer
-                                                          buyer    = lv_new_buyer_name )
-                      %element-supplier = if_abap_behv=>mk-on
-                      %element-compcode = if_abap_behv=>mk-on )
-             TO reported-purcon.
-    ENDIF.
+*    IF lt_buyer_updated IS NOT INITIAL.
+*
+*      zrk_cl_email_service=>send_email(
+*          im_sender    = 'koradaramjee@outlook.com'
+*          im_subject   = 'Document has been forwarded to you'
+*          im_receipent = 'koradaramjee@gmail.com'
+*          im_body      = 'Document has been forwarded to you. Please check your inbox in the Contract application!!' ).
+*
+*      SELECT SINGLE name FROM zrk_md_buyer WHERE buyer_id = @lv_new_buyer INTO @DATA(lv_new_buyer_name).
+*      IF sy-subrc <> 0.
+*        CLEAR lv_new_buyer_name.
+*      ENDIF.
+*      APPEND VALUE #( %tky              = <fs_temp_keys>-%tky
+*                      %msg              = NEW zrk_cx_msg( severity = if_abap_behv_message=>severity-success
+*                                                          textid   = zrk_cx_msg=>c_fwd_buyer
+*                                                          buyer    = lv_new_buyer_name )
+*                      %element-supplier = if_abap_behv=>mk-on
+*                      %element-compcode = if_abap_behv=>mk-on )
+*             TO reported-purcon.
+*    ENDIF.
   ENDMETHOD.
 
   METHOD rba_Purconitem.

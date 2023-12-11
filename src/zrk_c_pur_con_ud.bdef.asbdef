@@ -15,7 +15,7 @@ define behavior for ZRK_C_PUR_CON_UD alias PurCon
   use association _PurConItem { create; with draft; }
   use association Attachments { create; with draft; }
 
-  use action Forward;
+  use action Forward result entity ZRK_C_PUR_CON_UD;
   use action refresh_doc;
   use action Send_For_Approval;
   use action Renewal_doc;
